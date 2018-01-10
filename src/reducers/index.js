@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
+import ArtWorksReducer from './reducer_artWorks';
+import ActiveArtWork from './reducer_active_artwork';
 
 const rootReducer = combineReducers({
-  state: (state = {}) => state
+  artWorks: ArtWorksReducer,
+  activeArtWork: ActiveArtWork
 });
 
 export default rootReducer;

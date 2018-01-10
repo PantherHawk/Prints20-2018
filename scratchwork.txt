@@ -1,0 +1,6 @@
+ We want to figure out our state first
+
+ {
+ 	artWorks: [{title: 'Starry Night'}, {title: 'David'}],
+ 	activeArtWork: {title: 'Portrait of Gertrude Stein'} 
+ }
