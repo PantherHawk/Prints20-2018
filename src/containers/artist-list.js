@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { selectArtWork } from '../actions/index';
+import { selectArtWork, selectArtist } from '../actions/index';
 import { bindActionCreators } from 'redux';
+import Slider from 'react-slick';
 
 class ArtWorksList extends Component {
 	renderList() {
-		return this.props.artWorks.map(artWork => {
+		return this.props.artists.map(artist => {
 			return (
 				<li
-				key={artWork.title}
-				onClick={() => this.props.selectArtWork(artWork)}
+				key={artist.name}
+				onClick={() => {
+					this.props.selectArtWork(artist);
+					this.props.selectArtist(artist);
+					}
+				}
 				className="list-group-item"
-				>{artWork.title}</li>
+				>{artist.name}</li>
 			);
 		});
 	}
 
 	render() {
+		var settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+			onClick: function () {
+				this.props.selectArtWork(artist);
+				this.props.selectArtist(artist);
+			}
+    };
 		return (
-			<ul className="list-group col-sm-4">
-				{this.renderList()}
-			</ul>
+			<Slider {...settings}>
+
+					{this.renderList()}
+
+			</Slider>
 		)
 	}
 }
@@ -30,14 +48,14 @@ function mapDispatchToProps(dispatch) {
 	// should be passed to all our reducers
 	// the dispatch function receives all the actions and
 	// spits them out to all of the different reducers.
-	return bindActionCreators({ selectArtWork: selectArtWork }, dispatch);
+	return bindActionCreators({ selectArtWork: selectArtWork, selectArtist: selectArtist }, dispatch)
 }
 function mapStateToProps(state) {
 	// Whatever is returned will show up as props
 	// inside of ArtWorksList
 	return {
 		// the props we want to populate ArtWorksList with
-		artWorks: state.artWorks
+		artists: state.artists
 	};
 }
 

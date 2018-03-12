@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-import ArtWorksReducer from './reducer_artWorks';
+import ArtistReducer from './reducer_artWorks';
 import ActiveArtWork from './reducer_active_artwork';
+import ActiveArtist from './reducer_active_artist';
 
 const rootReducer = combineReducers({
-  artWorks: ArtWorksReducer,
-  activeArtWork: ActiveArtWork
+  artists: ArtistReducer,
+  activeArtWork: ActiveArtWork,
+  activeArtist: ActiveArtist
 });
 
 export default rootReducer;
