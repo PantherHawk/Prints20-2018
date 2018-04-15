@@ -22,6 +22,7 @@ class ArtWorksList extends Component {
 	}
 
 	render() {
+		const {works} = this.props;
 		var settings = {
       dots: true,
       infinite: true,
@@ -55,7 +56,7 @@ function mapStateToProps(state) {
 	// inside of ArtWorksList
 	return {
 		// the props we want to populate ArtWorksList with
-		artists: state.artists
+		artists: state.artists,
 	};
 }
 

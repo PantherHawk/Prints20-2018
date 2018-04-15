@@ -16,3 +16,10 @@ export function selectArtist(artist) {
 		payload: artist.name
 	};
 }
+
+export function search(query) {
+	return {
+		type: 'SEARCH',
+		payload: query
+	}
+}
