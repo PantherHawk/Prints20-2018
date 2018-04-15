@@ -17,7 +17,6 @@ const MenuItem = styled.a`
   font-weight: normal;
   line-height: normal;
   font-size: 18px;
-
   color: #FFFFFF;
 `
 const MenuItemLabel = styled.span`
@@ -31,10 +30,14 @@ const MenuItemLabel = styled.span`
 var styles = {
   bmBurgerButton: {
     position: 'fixed',
-    width: '36px',
+    width: '2%',
     height: '30px',
     left: '36px',
     top: '36px'
+  },
+  bmMenuWrap: {
+    bottom: '0',
+  left: '0'
   },
   bmBurgerBars: {
     background: '#373a47'
@@ -48,7 +51,7 @@ var styles = {
   },
   bmMenu: {
     background: '#373a47',
-    padding: '2.5em 1.5em 0',
+    padding: '0',
     fontSize: '1.15em'
   },
   bmMorphShape: {
@@ -63,52 +66,33 @@ var styles = {
   }
 }
 
-function App() {
-  return (
-     <Router>
-      <div>
-        <Menu  styles={ styles } width={ 280 }>
-          <MenuItem href="/"><MenuItemLabel style={
-          {
-            position: "absolute",
-            width: "188px",
-            height: "22px",
-            left: "63px",
-            top: "141px"
-          }
-          }>Gallery</MenuItemLabel></MenuItem>
-          <MenuItem href="/admin"><MenuItemLabel style ={
-            {
-              position: "absolute",
-              width: "182px",
-              height: "22px",
-              left: "63px",
-              top: "87px"
-            }
-          }>Admin</MenuItemLabel></MenuItem>
-          <MenuItem href="/collections"><MenuItemLabel style={
-            {
-              position: "absolute",
-              width: "160px",
-              height: "22px",
-              left: "63px",
-              top: "196px"
-            }
-          }>Collections</MenuItemLabel></MenuItem>
-        </Menu>
-        {/* <nav>
-          <LoginLink />
-          <LogoutLink logout={logout} />
-          <UserName />
-        </nav> */}
-        <div className="routes">
-          <Route exact path="/" component={Gallery}/>
-          <Route path="/collections" component={Collections}/>
-          <Route path="/admin" component={Admin}/>
+class App extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
+    return (
+      <Router>
+        <div>
+          <Menu  styles={ styles } >
+            <MenuItem href="/"><MenuItemLabel >Gallery</MenuItemLabel></MenuItem>
+            <MenuItem href="/admin"><MenuItemLabel >Admin</MenuItemLabel></MenuItem>
+            <MenuItem href="/collections"><MenuItemLabel>Collections</MenuItemLabel></MenuItem>
+          </Menu>
+          {/* <nav>
+            <LoginLink />
+            <LogoutLink logout={logout} />
+            <UserName />
+          </nav> */}
+          <div className="routes">
+            <Route exact path="/" component={Gallery}/>
+            <Route path="/collections" component={Collections}/>
+            <Route path="/admin" component={Admin}/>
+          </div>
         </div>
-      </div>
-     </Router>
-  )
+      </Router>
+    )
+	}
 }
 
 export default App;
