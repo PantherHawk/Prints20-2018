@@ -9,7 +9,7 @@ export default class Admin extends Component {
 			cloud_name: 'prints20',
 			api_key: CLOUDINARY_KEY,
 			api_secret: CLOUDINARY_SECRET,
-			upload_preset: 'tmsbbzve',
+			upload_preset: 'tdlphize',
 			tags:[]
 		}, function(result, error) {
 			console.log('result: ', result);
