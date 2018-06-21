@@ -5,7 +5,7 @@ export default class Admin extends Component {
   
 	uploadWidget() {
 		cloudinary.openUploadWidget({
-			cloudname: 'CLOUD_NAME',
+			cloudname: 'prints20',
 			upload_preset: 'PRESET',
 			tags:[]
 		})
