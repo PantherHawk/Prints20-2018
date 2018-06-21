@@ -5,12 +5,12 @@ export default class Admin extends Component {
   
 	uploadWidget() {
 		cloudinary.openUploadWidget({
-			cloudname: 'prints20',
+			cloud_name: 'prints20',
 			upload_preset: 'PRESET',
 			tags:[]
+		}, function(result, error) {
+			console.log('result: ', result);
 		})
-		.then(result => console.log('result: ', result))
-		.catch(error => console.log('error: ', error))
 	}
 
 	render() {
