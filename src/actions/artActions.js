@@ -21,10 +21,12 @@ export const fetchArtFail = error => ({
 export function fetchArt() {
 	return dispatch => {
 		dispatch(fetchArtBegin());
+		console.log('fetching art from cloudinary...');
 		return fetch(`https://${CLOUDINARY_KEY}:${CLOUDINARY_SECRET}@api.cloudinary.com/v1_1/prints20/resources/image`)
 			.then(handleErrors)
 			.then(res => res.json())
 			.then(json => {
+				console.log('in fetchArt: ', json);
 				dispatch(fetchArtSuccess(json.art));
 				return json.art;
 			})

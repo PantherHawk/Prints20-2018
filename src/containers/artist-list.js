@@ -1,28 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectArtWork, selectArtist } from '../actions/index';
+import { fetchArt } from '../actions/artActions.js';
 import { bindActionCreators } from 'redux';
 import Slider from 'react-slick';
 
 class ArtWorksList extends Component {
+	componentDidMount() {
+		console.log('component did mount, mk')
+		this.props.dispatch(fetchArt());
+	}
+
 	renderList() {
-		return this.props.artists.map(artist => {
+		return this.props.art.map(item => {
 			return (
 				<li
-				key={artist.name}
+				key={item.name}
 				onClick={() => {
-					this.props.selectArtWork(artist);
-					this.props.selectArtist(artist);
+					this.props.selectArtWork(item);
+					this.props.selectArtist(item);
 					}
 				}
 				className="list-group-item"
-				>{artist.name}</li>
+				>{item.name}</li>
 			);
 		});
 	}
 
 	render() {
-		const {works} = this.props;
+		const { error, loading, art } = this.props;
+		console.log('props ', this.props);
+		if (error) {
+			return <div>Whoops! {error.message}</div>;
+		}
+		if(loading) {
+			return <div>Loading... </div>;
+		}
+
 		var settings = {
       dots: true,
       infinite: true,
@@ -36,8 +50,7 @@ class ArtWorksList extends Component {
     };
 		return (
 			<Slider {...settings}>
-
-					{this.renderList()}
+			{this.renderList()}
 
 			</Slider>
 		)
@@ -49,14 +62,15 @@ function mapDispatchToProps(dispatch) {
 	// should be passed to all our reducers
 	// the dispatch function receives all the actions and
 	// spits them out to all of the different reducers.
-	return bindActionCreators({ selectArtWork: selectArtWork, selectArtist: selectArtist }, dispatch)
-}
+	return bindActionCreators({ selectArtWork: selectArtWork, selectArtist: selectArtist, fetchArt: fetchArt }, dispatch)}
 function mapStateToProps(state) {
 	// Whatever is returned will show up as props
 	// inside of ArtWorksList
 	return {
 		// the props we want to populate ArtWorksList with
-		artists: state.artists,
+		art: state.art,
+		loading: state.loading,
+		error: state.error
 	};
 }
 
