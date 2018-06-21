@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import ArtForm from './ArtForm';
+import { CLOUDINARY_KEY, CLOUDINARY_SECRET } from '../../config.js';
 
 export default class Admin extends Component {
   
 	uploadWidget() {
 		cloudinary.openUploadWidget({
 			cloud_name: 'prints20',
-			upload_preset: 'PRESET',
+			api_key: CLOUDINARY_KEY,
+			api_secret: CLOUDINARY_SECRET,
+			upload_preset: 'tmsbbzve',
 			tags:[]
 		}, function(result, error) {
 			console.log('result: ', result);
