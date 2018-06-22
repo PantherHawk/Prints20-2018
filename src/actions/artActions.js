@@ -4,9 +4,11 @@ export const FETCH_ART_BEGIN = 'FETCH_ART_BEGIN';
 export const FETCH_ART_SUCCESS = 'FETCH_ART_SUCCESS';
 export const FETCH_ART_FAIL = 'FETCH_ART_FAIL';
 
-export const fetchArtBegin = () => ({
-	type: FETCH_ART_BEGIN
-});
+export function fetchArtBegin() {
+	return {
+		type: FETCH_ART_BEGIN
+	};
+}
 
 export const fetchArtSuccess = art => ({
 	type: FETCH_ART_SUCCESS,
