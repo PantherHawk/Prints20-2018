@@ -8,7 +8,7 @@ import Slider from 'react-slick';
 class ArtWorksList extends Component {
 	componentDidMount() {
 		console.log('component did mount, mk')
-		this.props.dispatch(fetchArt());
+		//this.props.dispatch(fetchArt());
 	}
 
 	renderList() {
