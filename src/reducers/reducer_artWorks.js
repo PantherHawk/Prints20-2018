@@ -28,13 +28,13 @@ export default function artWorksReducer(state = initialState, action) {
 			return {
 				...state,
 				loading: false,
-				items: action.payload.art
+				items: action.payload
 			};
 		case FETCH_ART_FAIL:
 			return {
 				...state,
 				loading: false,
-				error: action.payload.error,
+				error: action.payload,
 				items: []
 			};
 		default:

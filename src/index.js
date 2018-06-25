@@ -14,9 +14,9 @@ const store = createStoreWithMiddleware(
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-store
-  .dispatch(fetchArt())
-  .then(() => console.log(store.getState()));
+//store
+ // .dispatch(fetchArt())
+ // .then(() => console.log(store.getState()));
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>

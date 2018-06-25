@@ -6,26 +6,25 @@ import { bindActionCreators } from 'redux';
 import Slider from 'react-slick';
 
 class ArtWorksList extends Component {
-	componentDidMount() {
-		console.log('component did mount, mk')
-		//this.props.dispatch(fetchArt());
-	}
-
-	renderList() {
-		return this.props.art.map(item => {
-			return (
-				<li
-				key={item.name}
-				onClick={() => {
-					this.props.selectArtWork(item);
-					this.props.selectArtist(item);
-					}
-				}
-				className="list-group-item"
-				>{item.name}</li>
-			);
-		});
-	}
+  componentDidMount() {
+	  this.props.fetchArt();
+  }
+	// renderList() {
+	// 	//this.props.fetchArt();
+	// 	return this.props.art.map(item => {
+	// 		return (
+	// 			<li
+	// 			key={item.name}
+	// 			onClick={() => {
+	// 				this.props.selectArtWork(item);
+	// 				this.props.selectArtist(item);
+	// 				}
+	// 			}
+	// 			className="list-group-item"
+	// 			>{item.name}</li>
+	// 		);
+	// 	});
+	// }
 
 	render() {
 		const { error, loading, art } = this.props;
@@ -50,7 +49,7 @@ class ArtWorksList extends Component {
     };
 		return (
 			<Slider {...settings}>
-			{this.renderList()}
+			{/* {this.renderList()} */}
 
 			</Slider>
 		)
