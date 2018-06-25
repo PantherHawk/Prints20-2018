@@ -9,22 +9,24 @@ class ArtWorksList extends Component {
   componentDidMount() {
 	  this.props.fetchArt();
   }
-	// renderList() {
-	// 	//this.props.fetchArt();
-	// 	return this.props.art.map(item => {
-	// 		return (
-	// 			<li
-	// 			key={item.name}
-	// 			onClick={() => {
-	// 				this.props.selectArtWork(item);
-	// 				this.props.selectArtist(item);
-	// 				}
-	// 			}
-	// 			className="list-group-item"
-	// 			>{item.name}</li>
-	// 		);
-	// 	});
-	// }
+	renderList() {
+		//this.props.fetchArt();
+		console.log('this.props.art', this.props.art)
+		return this.props.art.map(item => {
+      console.log('item: ', item)
+			return (
+				<li
+				key={item.name}
+				onClick={() => {
+					this.props.selectArtWork(item);
+					this.props.selectArtist(item);
+					}
+				}
+				className="list-group-item"
+				>{item.name}</li>
+			);
+		});
+	}
 
 	render() {
 		const { error, loading, art } = this.props;
@@ -49,7 +51,7 @@ class ArtWorksList extends Component {
     };
 		return (
 			<Slider {...settings}>
-			{/* {this.renderList()} */}
+			{this.renderList()}
 
 			</Slider>
 		)
@@ -69,7 +71,8 @@ function mapStateToProps(state) {
 		// the props we want to populate ArtWorksList with
 		art: state.art,
 		loading: state.loading,
-		error: state.error
+		error: state.error,
+    items: state.art.items
 	};
 }
 

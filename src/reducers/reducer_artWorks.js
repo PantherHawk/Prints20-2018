@@ -4,7 +4,7 @@ import {
 	FETCH_ART_FAIL
 } from '../actions/artActions.js'
 
-const initialState =	[	
+const initialState =	[
 		{name: 'Pablo Picasso', pieces: [
 				{title: 'Portrait of Gertrude Stein', img: "http://bit.ly/2o9Zx0m"}
 			]},
@@ -25,11 +25,7 @@ export default function artWorksReducer(state = initialState, action) {
 				error: null
 			};
 		case FETCH_ART_SUCCESS:
-			return {
-				...state,
-				loading: false,
-				items: action.payload
-			};
+			return Object.assign({}, state, [...state].concat(action.payload))
 		case FETCH_ART_FAIL:
 			return {
 				...state,
@@ -41,4 +37,3 @@ export default function artWorksReducer(state = initialState, action) {
 			return state;
 	}
 }
-

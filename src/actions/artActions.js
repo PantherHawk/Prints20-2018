@@ -29,10 +29,20 @@ export function fetchArt() {
   //   	'Authorization': 'Basic ' + btoa(CLOUDINARY_KEY + ":" + CLOUDINARY_SECRET),
   // 	},
 	// }).then(res => res.json());
-	const request = axios.get('http://localhost:8080/api/images').then(response => console.log('response: ', response)).catch(err => console.log('Fetch Error: ', err));
+	const request = axios.get('http://localhost:8080/api/images').then(response =>
+		response.data.data.children)
+		.then(res => res.map(post => ({
+			author: post.data.author,
+			link: post.data.link,
+			img: post.data.thumbnail,
+			title: post.data.title,
+		})))
+		.then(posts => posts)
+		.catch(err => console.log('Fetch Error: ', err));
+	console.log('request: ', request.then(data => console.log('promise data: ', data)));
 	return {
 		type: FETCH_ART_SUCCESS,
-		payload: request
+		payload: request.then(data => data)
 	}
 
 }

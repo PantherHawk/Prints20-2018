@@ -42,6 +42,7 @@
     "redux": "^3.0.4",
     "redux-burger-menu": "^0.2.4",
     "redux-form": "^7.3.0",
-    "redux-promise": "^0.6.0"
+    "redux-promise": "^0.6.0",
+    "volleyball": "^1.5.1"
   }
 }
