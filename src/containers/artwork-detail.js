@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
+import _ from 'lodash';
 
 class ArtWorkDetail extends Component {
 	renderPieces() {
-		return this.props.activeArtWork.map(piece => {
+		const {activeArtWork} = this.props
+		return _.forIn(activeArtWork, piece => {
 			return <div
 				key={piece.title}>
 				{piece.title}

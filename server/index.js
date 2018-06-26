@@ -17,6 +17,17 @@ cloudinary.config({
 	api_secret: CLOUDINARY_SECRET
 })
 
+app.put('/images', (req, res) => {
+	let url = req.body.url;
+	let title = req.body.title;
+	let artist = req.body.artist;
+	cloudinary.image(url, {alt: title, className: artist})
+	  .then(data => {
+			console.log('put data: ', data);
+			res.send(data);
+		})
+		.catch(err => console.log('error: ', err));
+});
 
 app.get('/images', (req, res) => {
 	cloudinary.v2.api.resources({type: 'upload'})

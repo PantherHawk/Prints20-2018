@@ -16,6 +16,9 @@ export async function fetchArt() {
 	};
 }
 
+export async function putArt(art) {
+	// let art[art.public_id]
+}
 // export function fetchArtBegin() {
 // 	return {
 // 		type: FETCH_ART_BEGIN
