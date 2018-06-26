@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { selectArtWork, selectArtist } from '../actions/index';
 import { fetchArt } from '../actions/artActions.js';
 import { bindActionCreators } from 'redux';
+import { CloudinaryContext, Image, Transformation } from 'cloudinary-react';
 import Slider from 'react-slick';
 
 class ArtWorksList extends Component {
@@ -14,15 +15,19 @@ class ArtWorksList extends Component {
 		return this.props.art.map(item => {
       console.log('item: ', item)
 			return (
-				<li
-				key={item.public_id}
-				onClick={() => {
-					this.props.selectArtWork(item);
-					this.props.selectArtist(item);
-					}
-				}
-				className="list-group-item"
-				>{item.public_id}</li>
+
+  				<Image
+            publicId={item.public_id}
+            key={item.public_id}
+  				  onClick={() => {
+  					this.props.selectArtWork(item);
+  					this.props.selectArtist(item);
+  					}
+  				}
+  				className="list-group-item"
+  				>{item.public_id}
+          <Transformation width="200" crop="scale" angle="10"/>
+        </Image>
 			);
 		});
 	}
@@ -50,11 +55,14 @@ class ArtWorksList extends Component {
 			}
     };
 		return (
-			<Slider {...settings}>
-			{this.renderList()}
+      <CloudinaryContext cloudName="prints20">
+  			<Slider {...settings}>
+  			{this.renderList()}
 
-			</Slider>
-		)
+  			</Slider>
+      </CloudinaryContext>
+    )
+
 	}
 }
 
