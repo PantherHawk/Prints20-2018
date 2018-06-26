@@ -1,8 +1,5 @@
-import {
-	FETCH_ART_BEGIN,
-	FETCH_ART_SUCCESS,
-	FETCH_ART_FAIL
-} from '../actions/artActions.js'
+import { FETCH_ART } from '../actions/artActions'
+import _ from 'lodash';
 
 const initialState =	[
 		{name: 'Pablo Picasso', pieces: [
@@ -16,24 +13,26 @@ const initialState =	[
 		]}
 	];
 
-export default function artWorksReducer(state = initialState, action) {
+export default function artWorksReducer(state = [], action) {
+	// console.log('action payload: ', action.payload)
 	switch(action.type) {
-		case FETCH_ART_BEGIN:
-			return {
-				...state,
-				loading: true,
-				error: null
-			};
-		case FETCH_ART_SUCCESS:
-			return Object.assign({}, state, [...state].concat(action.payload))
-		case FETCH_ART_FAIL:
-			return {
-				...state,
-				loading: false,
-				error: action.payload,
-				items: []
-			};
-		default:
-			return state;
+		// case FETCH_ART_BEGIN:
+		// 	return {
+		// 		...state,
+		// 		loading: true,
+		// 		error: null
+		// 	};
+		// case FETCH_ART_SUCCESS:
+		// 	return Object.assign({}, state, [...state].concat(action.payload))
+		case FETCH_ART:
+			return action.payload;
+		// case FETCH_ART_FAIL:
+		// 	return {
+		// 		...state,
+		// 		loading: false,
+		// 		error: action.payload,
+		// 		items: []
+		// 	};
 	}
+	return state;
 }

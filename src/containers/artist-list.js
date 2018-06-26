@@ -10,20 +10,19 @@ class ArtWorksList extends Component {
 	  this.props.fetchArt();
   }
 	renderList() {
-		//this.props.fetchArt();
 		console.log('this.props.art', this.props.art)
 		return this.props.art.map(item => {
       console.log('item: ', item)
 			return (
 				<li
-				key={item.name}
+				key={item.public_id}
 				onClick={() => {
 					this.props.selectArtWork(item);
 					this.props.selectArtist(item);
 					}
 				}
 				className="list-group-item"
-				>{item.name}</li>
+				>{item.public_id}</li>
 			);
 		});
 	}
@@ -44,9 +43,10 @@ class ArtWorksList extends Component {
       speed: 500,
       slidesToShow: 3,
       slidesToScroll: 3,
-			onClick: function () {
-				this.props.selectArtWork(artist);
-				this.props.selectArtist(artist);
+			onClick: function (e) {
+        console.log('e: ', e)
+				// this.props.selectArtWork(artist);
+				// this.props.selectArtist(artist);
 			}
     };
 		return (
@@ -63,7 +63,9 @@ function mapDispatchToProps(dispatch) {
 	// should be passed to all our reducers
 	// the dispatch function receives all the actions and
 	// spits them out to all of the different reducers.
-	return bindActionCreators({ selectArtWork: selectArtWork, selectArtist: selectArtist, fetchArt: fetchArt }, dispatch)}
+	return bindActionCreators({ selectArtWork: selectArtWork, selectArtist: selectArtist, fetchArt: fetchArt }, dispatch);
+}
+
 function mapStateToProps(state) {
 	// Whatever is returned will show up as props
 	// inside of ArtWorksList

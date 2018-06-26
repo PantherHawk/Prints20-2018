@@ -1,4 +1,6 @@
 // Actions go here
+import 'babel-polyfill';
+export const FETCH_ART = 'FETCH_ART';
 
 export function selectArtWork(artist) {
 	console.log('argument of action: ', artist)
@@ -16,6 +18,8 @@ export function selectArtist(artist) {
 		payload: artist.name
 	};
 }
+
+
 
 export function search(query) {
 	return {

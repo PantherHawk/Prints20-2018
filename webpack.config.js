@@ -22,7 +22,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: './',
-    port: 8080,
+    port: 8000,
     proxy: {
       '/api': {
         target: {
