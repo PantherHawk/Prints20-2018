@@ -1,3 +1,4 @@
+
 // Actions go here
 export const FETCH_ART = 'FETCH_ART';
 
@@ -11,9 +12,14 @@ export function selectArtWork(art) {
 	};
 }
 
-export function search(query) {
+export async function findArt(term) {
+	let response = await fetch(`/api/search?q=${term}`);
+	let searchResult = await response.json();
+
+	console.log('data from query search: ', searchResult);
+
 	return {
 		type: 'SEARCH',
-		payload: query
+		payload: searchResult
 	}
 }

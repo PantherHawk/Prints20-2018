@@ -11,8 +11,8 @@ export default class Admin extends Component {
 			api_secret: CLOUDINARY_SECRET,
 			upload_preset: 'tdlphize',
 			tags:[]
-		}, function(result, error) {
-			console.log('result: ', result);
+		}, function(error, result) {
+			console.log('result: ', result[0].url);
 		})
 	}
 

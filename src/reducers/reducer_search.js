@@ -1,12 +1,12 @@
 
-const initialState = {contents: ['Pablo', 'Picasso', 'Jay', 'Defeo'], query: '', works: []};
+const initialState = {contents: {}};
 
-export default function (state = initialState, action) {
+export default function (state = {}, action) {
+  console.log('action.value: ', action.payload)
+  console.log('current state: ', state)
   switch(action.type) {
     case 'SEARCH': {
-      const {value} = action;
-      const works = state.contents.filter(el => el.includes(value));
-      return {...state, value, work};
+      return {...state, payload};
     }
   }
   return state;

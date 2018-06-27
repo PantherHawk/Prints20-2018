@@ -38,6 +38,16 @@ app.get('/images', (req, res) => {
 		.catch(err => console.log("error: ", err));
 });
 
+app.get('/search', (req, res) => {
+	let searchTerm = req.query.q;
+	cloudinary.v2.api.resources_by_tag(searchTerm)
+	  .then(data => {
+			console.log('data from cloudinary tag search: ', data)
+			res.send(data);
+		})
+		.catch(err => console.log('Err: ', err))
+})
+
 app.listen(3000, '0.0.0.0', () => {
 	console.log('Server running on port 3000...')
 });

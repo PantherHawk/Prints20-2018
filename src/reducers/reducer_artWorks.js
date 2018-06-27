@@ -24,6 +24,8 @@ export default function artWorksReducer(state = {}, action) {
 		// 	};
 		// case FETCH_ART_SUCCESS:
 		// 	return Object.assign({}, state, [...state].concat(action.payload))
+		case 'SEARCH':
+			return _.mapKeys(action.payload.resources, 'public_id')
 		case FETCH_ART:
 			return _.mapKeys(action.payload, 'public_id')
 		// case FETCH_ART_FAIL:

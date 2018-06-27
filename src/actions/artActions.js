@@ -5,7 +5,7 @@ export const FETCH_ART = 'FETCH_ART';
 
 export async function fetchArt() {
 
-	let response = await fetch('http://localhost:8000/api/images');
+	let response = await fetch('/api/images');
 	let data = await response.json();
 
 	console.log('data: ', data)
