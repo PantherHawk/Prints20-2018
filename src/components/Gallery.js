@@ -13,7 +13,7 @@ export default class Gallery extends Component {
       <div>
         <Search />
       	<ArtWorksList/>
-      	{/* <ArtWorkDetail/> */}
+      	{/* <ArtWorkDetail/>*/}
       </div>
     );
   }
