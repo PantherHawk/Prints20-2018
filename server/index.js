@@ -30,7 +30,7 @@ app.put('/images', (req, res) => {
 });
 
 app.get('/images', (req, res) => {
-	cloudinary.v2.api.resources({type: 'upload'})
+	cloudinary.v2.api.resources({type: 'upload', context: 'true'})
 		.then(data => {
 			console.log('data: ', data);
 			res.send(data);

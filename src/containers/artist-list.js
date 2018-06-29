@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import ArtWorkDetail from '../containers/artwork-detail';
+import Zoomer from '../components/Zoomer';
 import {selectArtWork, selectArtist} from '../actions/index';
 import {fetchArt} from '../actions/artActions.js';
 import {bindActionCreators} from 'redux';
@@ -12,71 +14,89 @@ class ArtWorksList extends Component {
     this.props.fetchArt();
   }
   renderList() {
-    const { art } = this.props;
-    return _.map(art, obj => {
-      return (<Image publicId={obj.public_id} key={obj.public_id} onClick={() => {
-          this.props.selectArtWork(art[obj.public_id]);
-        }} className={obj.alt}>
-        {obj.public_id}
-        <Transformation width="200" crop="scale" angle="10"/>
-      </Image>);
+    const {items} = this.props;
+    return _.map(items, obj => {
+      console.log('item object: ', obj)
+      return (
+        <div key={obj.public_id}>
+          <Image publicId={obj.public_id} onClick={() => {
+            this.props.selectArtWork(obj);
+          }} className={obj.alt}>
+          <Transformation width="200" crop="scale" angle="10"/>
+        </Image>
+        <span>{obj.caption}</span>
+      </div>
+      );
     })
-}
-
-render() {
-  const {error, loading, art} = this.props;
-  console.log('props ', this.props);
-  if (error) {
-    return <div>Whoops! {error.message}</div>;
   }
-  if (loading) {
-    return <div>Loading...
-    </div>;
+  initSeaDragon() {
+    let viewer = OpenSeaDragon({
+      id: "ocd",
+
+    })
   }
 
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    onClick: function(e) {
-      console.log('e: ', e)
-      // this.props.selectArtWork(artist);
-      // this.props.selectArtist(artist);
+  render() {
+    const {error, items, loading, selected} = this.props;
+    console.log('props ', this.props);
+    if (error) {
+      return <div>Whoops! {error.message}</div>;
     }
-  };
-  return (<CloudinaryContext cloudName="prints20">
-    <Slider {...settings}>
-      {this.renderList()}
+    if (loading || !items) {
+      return <div>Loading...
+      </div>;
+    }
 
-    </Slider>
-  </CloudinaryContext>)
+    var settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      onClick: function(e) {
+        console.log('e: ', e)
+        this.props.selectArtWork(artist);
+        // this.props.selectArtist(artist);
+      }
+    };
+    return selected ?
+    (
+    // <ArtWorkDetail >
+      <Zoomer image={selected.url} />
+    // {/* <ArtWorkDetail /> */}
+    )
+    : (
+      <CloudinaryContext cloudName="prints20">
+        <Slider {...settings}>
+          {this.renderList()}
+        </Slider>
+      </CloudinaryContext>
+  )
 
-}
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-// Whenever selectArtWork is called, the result
-// should be passed to all our reducers
-// the dispatch function receives all the actions and
-// spits them out to all of the different reducers.
-return bindActionCreators({
-  selectArtWork: selectArtWork,
-  fetchArt: fetchArt
-}, dispatch);
+  // Whenever selectArtWork is called, the result
+  // should be passed to all our reducers
+  // the dispatch function receives all the actions and
+  // spits them out to all of the different reducers.
+  return bindActionCreators({
+    selectArtWork: selectArtWork,
+    fetchArt: fetchArt
+  }, dispatch);
 }
 
 function mapStateToProps(state) {
-// Whatever is returned will show up as props
-// inside of ArtWorksList
-return {
-  // the props we want to populate ArtWorksList with
-  art: state.art,
-  loading: state.loading,
-  error: state.error,
-  items: state.art.items
-};
+  // Whatever is returned will show up as props
+  // inside of ArtWorksList
+  return {
+    // the props we want to populate ArtWorksList with
+    items: state.art.items,
+    loading: state.art.loading,
+    error: state.art.error,
+    selected: state.activeArtWork
+  };
 }
 
 // Promote ArtWorkList from a component to a container - it needs

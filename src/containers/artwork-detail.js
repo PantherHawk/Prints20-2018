@@ -6,6 +6,7 @@ import _ from 'lodash';
 class ArtWorkDetail extends Component {
 	renderPieces() {
 		const {activeArtWork} = this.props
+		console.log('activeArtWork: ', activeArtWork)
 		return _.forIn(activeArtWork, piece => {
 			return <div
 				key={piece.title}>
@@ -33,9 +34,6 @@ class ArtWorkDetail extends Component {
 			<div>
 				<h3>Art by {this.props.activeArtist}</h3>
 				<div>Title: {this.props.activeArtWork.name}</div>
-				<Slider {...settings}>
-				{this.renderPieces()}
-				</Slider>
 			</div>
 		)
 	}

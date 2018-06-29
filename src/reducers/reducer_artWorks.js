@@ -1,4 +1,4 @@
-import { FETCH_ART } from '../actions/artActions'
+import { FETCH_ART_BEGIN, FETCH_ART_SUCCESS } from '../actions/artActions'
 import _ from 'lodash';
 
 const initialState =	[
@@ -16,18 +16,26 @@ const initialState =	[
 export default function artWorksReducer(state = {}, action) {
 	console.log('action payload: ', action.payload)
 	switch(action.type) {
-		// case FETCH_ART_BEGIN:
-		// 	return {
-		// 		...state,
-		// 		loading: true,
-		// 		error: null
-		// 	};
-		// case FETCH_ART_SUCCESS:
-		// 	return Object.assign({}, state, [...state].concat(action.payload))
+		case FETCH_ART_BEGIN:
+			return {
+				...state,
+				loading: true,
+				error: null
+			};
+		case FETCH_ART_SUCCESS:
+			return {
+				...state,
+				loading: false,
+				items: action.payload
+			};
 		case 'SEARCH':
-			return _.mapKeys(action.payload.resources, 'public_id')
-		case FETCH_ART:
-			return _.mapKeys(action.payload, 'public_id')
+			return {
+				...state,
+				loading: false,
+				items: action.payload
+			};
+		// case FETCH_ART:
+
 		// case FETCH_ART_FAIL:
 		// 	return {
 		// 		...state,

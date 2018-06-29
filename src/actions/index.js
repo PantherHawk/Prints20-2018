@@ -20,6 +20,6 @@ export async function findArt(term) {
 
 	return {
 		type: 'SEARCH',
-		payload: searchResult
+		payload: searchResult.resources
 	}
 }

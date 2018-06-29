@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Search from '../containers/SearchBar';
 import ArtWorksList from '../containers/artist-list';
-import ArtWorkDetail from '../containers/artwork-detail';
+// import ArtWorkDetail from '../containers/artwork-detail';
 import Menu from './Menu'
 
 export default class Gallery extends Component {
@@ -13,7 +13,7 @@ export default class Gallery extends Component {
       <div>
         <Search />
       	<ArtWorksList/>
-      	<ArtWorkDetail/>
+      	{/* <ArtWorkDetail/> */}
       </div>
     );
   }
