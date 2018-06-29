@@ -15,7 +15,7 @@ const store = createStoreWithMiddleware(
 	reducers,
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-
+console.log('store: ', store)
 ReactDOM.render(
   <Provider store={store}>
     <App />

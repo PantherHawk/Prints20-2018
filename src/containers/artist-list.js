@@ -7,28 +7,30 @@ import {fetchArt} from '../actions/artActions.js';
 import {bindActionCreators} from 'redux';
 import {CloudinaryContext, Image, Transformation} from 'cloudinary-react';
 import Slider from 'react-slick';
-import _ from 'lodash'
+import _ from 'lodash';
+import faker from 'faker';
 
 class ArtWorksList extends Component {
   componentDidMount() {
     this.props.fetchArt();
   }
-  renderList() {
+  renderItem(item) {
     const {items} = this.props;
-    return _.map(items, obj => {
-      console.log('item object: ', obj)
-      return (
-        <div key={obj.public_id}>
-          <Image publicId={obj.public_id} onClick={() => {
-            this.props.selectArtWork(obj);
-          }} className={obj.alt}>
-          <Transformation width="200" crop="scale" angle="10"/>
-        </Image>
-        <span>{obj.caption}</span>
+    let erroneousThing = '';
+    return (
+        <div key={item.public_id} className='grid-item'>
+          <CloudinaryContext cloudName="prints20">
+            <Image publicId={item.public_id} onClick={() => {
+              this.props.selectArtWork(item);
+            }} className={item.alt}>
+            <Transformation width="200" crop="scale"/>
+          </Image>
+        </CloudinaryContext>
+        <span>{item.caption}</span>
       </div>
-      );
-    })
-  }
+    )
+ }
+
   initSeaDragon() {
     let viewer = OpenSeaDragon({
       id: "ocd",
@@ -37,6 +39,7 @@ class ArtWorksList extends Component {
   }
 
   render() {
+    // console.log('renderlist output: ', this.renderList())
     const {error, items, loading, selected} = this.props;
     console.log('props ', this.props);
     if (error) {
@@ -48,11 +51,15 @@ class ArtWorksList extends Component {
     }
 
     var settings = {
-      dots: true,
+      className: "center",
+      centerMode: true,
       infinite: true,
-      speed: 500,
+      centerPadding: "60px",
       slidesToShow: 3,
-      slidesToScroll: 3,
+      speed: 500,
+      rows: 2,
+      slidesPerRow: 2,
+
       onClick: function(e) {
         console.log('e: ', e)
         this.props.selectArtWork(artist);
@@ -61,16 +68,27 @@ class ArtWorksList extends Component {
     };
     return selected ?
     (
-    // <ArtWorkDetail >
       <Zoomer image={selected.url} />
-    // {/* <ArtWorkDetail /> */}
     )
     : (
-      <CloudinaryContext cloudName="prints20">
+      <div className="posts-rows">
         <Slider {...settings}>
-          {this.renderList()}
+
+          {
+            items.slice(0, Math.floor((items.length - 1)/2)).map((item, i) => {
+              return this.renderItem(item)
+            })
+          }
+
         </Slider>
-      </CloudinaryContext>
+        <Slider {...settings}>
+        {
+          items.slice(Math.floor((items.length - 1)/2) + 1).map((item, i) => {
+            return this.renderItem(item)
+          })
+        }
+      </Slider>
+    </div>
   )
 
   }

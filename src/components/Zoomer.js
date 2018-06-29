@@ -20,6 +20,7 @@ class Zoomer extends Component {
   }
   componentDidMount() {
     console.log('mounted')
+    console.log('img: ', document.querySelector('img'))
     this.initSeaDragon();
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -28,8 +29,6 @@ class Zoomer extends Component {
 
   initSeaDragon() {
     let {id, image, type} = this.props;
-    console.log('this.props: ', this.props)
-    console.log('this in openseadragon ', this)
     loadImage(image).then(data => {
       this.Viewer = openSeadragon({
         id: id,
@@ -52,7 +51,7 @@ class Zoomer extends Component {
   render() {
     // let self = this;
     let {id} = this.props;
-    return (<div id={id} style={{width: "800px", height: "600px"}}></div>)
+    return ( <div id={id} style={{width: "800px", height: "600px"}}></div>)
   }
 }
 
