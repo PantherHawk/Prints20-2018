@@ -6,11 +6,15 @@ import {selectArtWork, selectArtist} from '../actions/index';
 import {fetchArt} from '../actions/artActions.js';
 import {bindActionCreators} from 'redux';
 import {CloudinaryContext, Image, Transformation} from 'cloudinary-react';
-import Slider from 'react-slick';
+import StackGrid from 'react-stack-grid';
+// import Slider from 'react-slick';
 import _ from 'lodash';
 import faker from 'faker';
 
 class ArtWorksList extends Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     this.props.fetchArt();
   }
@@ -30,13 +34,6 @@ class ArtWorksList extends Component {
       </div>
     )
  }
-
-  initSeaDragon() {
-    let viewer = OpenSeaDragon({
-      id: "ocd",
-
-    })
-  }
 
   render() {
     // console.log('renderlist output: ', this.renderList())
@@ -72,7 +69,7 @@ class ArtWorksList extends Component {
     )
     : (
       <div className="posts-rows">
-        <Slider {...settings}>
+        {/* <Slider {...settings}>
 
           {
             items.slice(0, Math.floor((items.length - 1)/2)).map((item, i) => {
@@ -87,7 +84,16 @@ class ArtWorksList extends Component {
             return this.renderItem(item)
           })
         }
-      </Slider>
+      </Slider> */}
+      <StackGrid
+        columnWidth={"33.33%"}
+        gutterWidth={10}
+        gutterHeigh={10}
+        monitorImagesLoaded={true}
+        horizontal={true}
+      >
+        {items.map(item => this.renderItem(item))}
+      </StackGrid>
     </div>
   )
 
