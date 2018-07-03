@@ -1,6 +1,9 @@
 
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {findArt} from '../actions/index';
 import onClickOutside from 'react-onclickoutside';
 
 class DropDown extends Component {
@@ -23,8 +26,11 @@ class DropDown extends Component {
         listOpen: !prevState.listOpen
       }));
     }
+    chooseArtist(artist) {
+      this.props.findArt(artist);
+    }
     render() {
-      const {list, toggleItem, chooseArtist} = this.props;
+      const {list, toggleItem} = this.props;
       const {listOpen, headerTitle} = this.state;
       return (
         <div className="dd-wrapper">
@@ -41,11 +47,11 @@ class DropDown extends Component {
                 className="dd-list-item"
                 key={item.id}
                 onClick={() => {
-                  toggleItem(item.id, item.key)
-                  chooseArtist(`${item.name.first} ${item.name.last}`)
+                  toggleItem(item.id, item.key);
+                  this.chooseArtist(`${item.name}`);
                 }
                 }>
-                {item.name ? `${item.name.first} ${item.name.last}` : item.date} {item.selected && <FontAwesome name="check"/>}
+                {item.name ? `${item.name}` : item.date} {item.selected && <FontAwesome name="check"/>}
               </li>
             ))}
           </ul>}
@@ -54,4 +60,12 @@ class DropDown extends Component {
     }
 }
 
-export default onClickOutside(DropDown);
+function mapDispatchToProps(dispatch) {
+  // Whenever selectArtWork is called, the result
+  // should be passed to all our reducers
+  // the dispatch function receives all the actions and
+  // spits them out to all of the different reducers.
+  return bindActionCreators({ findArt: findArt }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(onClickOutside(DropDown));
