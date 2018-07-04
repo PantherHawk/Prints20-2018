@@ -5,6 +5,38 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {findArt} from '../actions/index';
 import onClickOutside from 'react-onclickoutside';
+import { css, hover, focus } from 'glamor';
+import styled from 'styled-components';
+
+const DropDownMenu = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  background-clip: padding-box;
+`;
+let listEl = css({
+    display: 'block',
+    padding: '3px 20px',
+    clear: 'both',
+    fontWeight: 400,
+    lineHeight: 1.428571429,
+    // color: '#fff',
+    whiteSpace: 'nowrap'
+});
 
 class DropDown extends Component {
     constructor(props) {
@@ -33,7 +65,7 @@ class DropDown extends Component {
       const {list, toggleItem} = this.props;
       const {listOpen, headerTitle} = this.state;
       return (
-        <div className="dd-wrapper">
+        <div className="dd-wrapper col-sm-4">
           <div className="dd-header" onClick={() => this.toggleList()}>
             <div className="dd-header-title">{headerTitle}</div>
             {listOpen
@@ -41,20 +73,22 @@ class DropDown extends Component {
               : <FontAwesome name="angle-down" size="2x" />
             }
           </div>
-          {listOpen && <ul className="dd-list">
+          {listOpen && <DropDownMenu className="dd-list inner">
             {list.map(item => (
               <li
-                className="dd-list-item"
+                // className="dd-list-item bootstrap-select btn-group dropdown-menu li a"
+                { ...hover({backgroundColor: 'grey'})}
+                style={{cursor: 'pointer', padding: '3px 20px', display: 'block'}}
                 key={item.id}
                 onClick={() => {
-                  toggleItem(item.id, item.key);
-                  this.chooseArtist(`${item.name}`);
-                }
+                    toggleItem(item.id, item.key);
+                    this.chooseArtist(`${item.name}`);
+                  }
                 }>
-                {item.name ? `${item.name}` : item.date} {item.selected && <FontAwesome name="check"/>}
+                <span className="text" style={{marginRight: '34px'}}>{item.name ? `${item.name}` : item.date} {item.selected && <FontAwesome name="check"/>}</span>
               </li>
             ))}
-          </ul>}
+          </DropDownMenu>}
         </div>
       )
     }

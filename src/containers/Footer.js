@@ -37,6 +37,96 @@ class Footer extends Component {
           selected: false,
           key: 'artists'
         }
+      ],
+      medium: [
+        {
+          id: 0,
+          name: 'Oil on canvas',
+          selected: false,
+          key: 'medium'
+        }, {
+          id: 1,
+          name: 'Oil on copper',
+          selected: false,
+          key: 'medium'
+        }, {
+          id: 2,
+          name: 'Oil on silver-copper alloy',
+          selected: false,
+          key: 'medium'
+        }, {
+          id: 3,
+          name: 'Oil on panel',
+          selected: false,
+          key: 'medium'
+        }, {
+          id: 4,
+          name: 'Works on paper',
+          selected: false,
+          key: 'medium'
+        }, {
+          id: 5,
+          name: 'Lithographs',
+          selected: false,
+          key: 'medium'
+        },
+        {
+          id: 6,
+          name: 'Engravings',
+          selected: false,
+          key: 'medium'
+        },
+        {
+          id: 7,
+          name: 'Posters',
+          selected: false,
+          key: 'medium'
+        },
+      ],
+      subject: [
+        {
+          id: 0,
+          name: 'WPA',
+          selected: false,
+          key: 'subject'
+        }, {
+          id: 1,
+          name: 'Judaica',
+          selected: false,
+          key: 'subject'
+        }, {
+          id: 2,
+          name: 'Pop art',
+          selected: false,
+          key: 'subject'
+        }, {
+          id: 3,
+          name: 'Still lifes',
+          selected: false,
+          key: 'subject'
+        }, {
+          id: 4,
+          name: 'Drawings',
+          selected: false,
+          key: 'subject'
+        }, {
+          id: 5,
+          name: 'Parables',
+          selected: false,
+          key: 'subject'
+        },
+        {
+          id: 6,
+          name: 'Animal Paintings',
+          selected: false,
+          key: 'subject'
+        },
+        {
+          id: 7,
+          name: 'Mythology',
+          selected: false,
+          key: 'subject'
+        },
       ]
     }
   }
@@ -50,10 +140,23 @@ class Footer extends Component {
   render() {
     return (<footer className="collection-grid-filters row">
       <DropDown
+        className="col-sm-6"
         title="Select an Artist"
         list={this.state.artists}
         toggleItem={this.toggleSelected.bind(this)}
-      /> {/* <div className="filter-group filter-group--sorting">
+      />
+      <DropDown
+        className="col-sm-6"
+        title="Select an Period"
+        list={this.state.medium}
+        toggleItem={this.toggleSelected.bind(this)}
+      />
+      <DropDown
+        className="col-sm-6"
+        title="Select a Subject"
+        list={this.state.medium}
+        toggleItem={this.toggleSelected.bind(this)}
+      />{/* <div className="filter-group filter-group--sorting">
         <div className="collapse-for-small" id="theFilters" aria-expanded="true" style={{
             style: 'auto'
           }}>
