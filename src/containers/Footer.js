@@ -154,7 +154,7 @@ class Footer extends Component {
       <DropDown
         className="col-sm-6"
         title="Select a Subject"
-        list={this.state.medium}
+        list={this.state.subject}
         toggleItem={this.toggleSelected.bind(this)}
       />{/* <div className="filter-group filter-group--sorting">
         <div className="collapse-for-small" id="theFilters" aria-expanded="true" style={{
