@@ -74,7 +74,7 @@ class DropDown extends Component {
             }
           </div>
           {listOpen && <DropDownMenu className="dd-list inner">
-            {list.map(item => (
+            {list && list.map(item => (
               <li
                 // className="dd-list-item bootstrap-select btn-group dropdown-menu li a"
                 { ...hover({backgroundColor: 'grey'})}

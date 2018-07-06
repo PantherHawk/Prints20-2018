@@ -17,6 +17,13 @@ export async function findArt(term) {
 	let searchResult = await response.json();
 
 	console.log('data from query search: ', searchResult);
+	_.forIn(searchResult.resources, (datum) => {
+		if (datum.context) {
+			_.merge(datum, datum.context.custom)
+			delete datum.context;
+			console.log('after merge: ', datum)
+		}
+	})
 
 	return {
 		type: 'SEARCH',

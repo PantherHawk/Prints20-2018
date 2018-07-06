@@ -40,7 +40,7 @@ app.get('/images', (req, res) => {
 
 app.get('/search', (req, res) => {
 	let searchTerm = req.query.q;
-	cloudinary.v2.api.resources_by_tag(searchTerm)
+	cloudinary.v2.api.resources_by_tag(searchTerm, {context: 'true'})
 	  .then(data => {
 			console.log('data from cloudinary tag search: ', data)
 			res.send(data);

@@ -38,7 +38,11 @@ export default function artWorksReducer(state = {}, action) {
 			return {
 				...state,
 				loading: false,
-				items: action.payload
+				items: action.payload.reduce((memo, el) => {
+					if (el.artist === undefined || el.artist === null) {return memo}
+					memo[el.artist] = memo[el.artist] ? [...memo[el.artist], {...el}] : [{...el}];
+					return memo;
+				}, {})
 			};
 		// case FETCH_ART:
 

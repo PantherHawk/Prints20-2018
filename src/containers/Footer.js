@@ -6,39 +6,40 @@ class Footer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      artists: [
-        {
-          id: 0,
-          name: 'Jay Defeo',
-          selected: false,
-          key: 'artists'
-        }, {
-          id: 1,
-          name: 'Frank Stick',
-          selected: false,
-          key: 'artists'
-        }, {
-          id: 2,
-          name: 'Raphael Soyer',
-          selected: false,
-          key: 'artists'
-        }, {
-          id: 3,
-          name: 'James Daugherty',
-          selected: false,
-          key: 'artists'
-        }, {
-          id: 4,
-          name: 'Israel Abramfksy',
-          selected: false,
-          key: 'artists'
-        }, {
-          id: 5,
-          name: 'Marion Boyd Allen',
-          selected: false,
-          key: 'artists'
-        }
-      ],
+      artists: [],
+      //   {
+      //     id: 0,
+      //     name: 'Jay Defeo',
+      //     selected: false,
+      //     key: 'artists'
+      //   }, {
+      //     id: 1,
+      //     name: 'Frank Stick',
+      //     selected: false,
+      //     key: 'artists'
+      //   }, {
+      //     id: 2,
+      //     name: 'Raphael Soyer',
+      //     selected: false,
+      //     key: 'artists'
+      //   }, {
+      //     id: 3,
+      //     name: 'James Daugherty',
+      //     selected: false,
+      //     key: 'artists'
+      //   }, {
+      //     id: 4,
+      //     name: 'Israel Abramfksy',
+      //     selected: false,
+      //     key: 'artists'
+      //   }, {
+      //     id: 5,
+      //     name: 'Marion Boyd Allen',
+      //     selected: false,
+      //     key: 'artists'
+      //   }
+      // ],
+
       medium: [
         {
           id: 0,
@@ -131,6 +132,22 @@ class Footer extends Component {
       ]
     }
   }
+  componentDidMount() {
+    this.setState({
+      artists: Object.keys(this.props.artists)
+    })
+    if (this.props.artists) {
+      for (var name in this.props.artists) {
+        this.state.artists.push({
+          id: 7,
+          name: name,
+          selected: false,
+          key: 'artists'
+        })
+      }
+    }
+    console.log('this.state.artists: ', this.state.artists)
+  }
   toggleSelected(id, key) {
     let temp = this.state[key];
     temp[id].selected = !temp[id].selected;
@@ -139,6 +156,8 @@ class Footer extends Component {
     })
   }
   render() {
+    const {artists} = this.props;
+    console.log('artists from props: ', artists)
     return (<footer className="collection-grid-filters row">
       <DropDown
         className="col-sm-6"
@@ -188,9 +207,12 @@ class Footer extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   artists: Object.keys(state.art.items) || []
-// }
+function mapStateToProps(state) {
+  console.log('from mapStateToProps in Footer: ', state.art.items)
+  return {
+    artists: state.art.items,
+  };
+}
 
-// export default connect(mapStateToProps, null)(Footer);
-export default Footer;
+export default connect(mapStateToProps, null)(Footer);
+// export default Footer;
