@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {fetchArtists} from '../actions/index';
 import DropDown from '../components/DropDown';
 
 class Footer extends Component {
@@ -132,21 +134,34 @@ class Footer extends Component {
       ]
     }
   }
+  fillList() {
+    return Object.keys(this.state.artists);
+  }
   componentDidMount() {
+    this.props.fetchArtists();
     this.setState({
-      artists: Object.keys(this.props.artists)
+      artists: this.props.artists
     })
-    if (this.props.artists) {
+    this.formatList();
+  }
+  formatList(el) {
+    console.log('formatting list')
+    let list = [];
+    if (this.props.artists.length > 0) {
       for (var name in this.props.artists) {
-        this.state.artists.push({
-          id: 7,
+        console.log('name: ', name)
+        list.push({
+          id: parseInt(name, 36),
           name: name,
           selected: false,
           key: 'artists'
         })
       }
+      this.setState({
+        artists: list
+      })
     }
-    console.log('this.state.artists: ', this.state.artists)
+    console.log('this.state.artists: ', this.props.artists)
   }
   toggleSelected(id, key) {
     let temp = this.state[key];
@@ -162,8 +177,15 @@ class Footer extends Component {
       <DropDown
         className="col-sm-6"
         title="Select an Artist"
-        list={this.state.artists}
-        toggleItem={this.toggleSelected.bind(this)}
+        list={this.props.artists.map(artist => {
+          return {
+            id: parseInt(artist, 36),
+            name: artist,
+            selected: false,
+            key: 'artists'
+          }
+        })}
+        // toggleItem={this.toggleSelected.bind(this)}
       />
       <DropDown
         className="col-sm-6"
@@ -208,11 +230,24 @@ class Footer extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('from mapStateToProps in Footer: ', state.art.items)
-  return {
-    artists: state.art.items,
-  };
-}
+  if (state.art.items) {
+    console.log('refilling state in Footer with: ', state.art)
+    return {
+      artists: state.artists
+    }
+  } else {
+    return {
+      artists: []
+    }
+  }
+  this.formatList();
+};
 
-export default connect(mapStateToProps, null)(Footer);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    fetchArtists: fetchArtists
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);
 // export default Footer;

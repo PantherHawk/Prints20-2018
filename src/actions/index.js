@@ -30,3 +30,15 @@ export async function findArt(term) {
 		payload: searchResult.resources
 	}
 }
+
+export async function fetchArtists() {
+	let response = await fetch(`/api/all_artists_list`);
+	let result = await response.json();
+	let names = result.folders.map(folder => {
+		return folder.name;
+	})
+	return {
+		type: 'GET_ALL_ARTISTS',
+		payload: names
+	}
+}

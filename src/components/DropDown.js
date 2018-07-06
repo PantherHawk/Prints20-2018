@@ -59,6 +59,7 @@ class DropDown extends Component {
       }));
     }
     chooseArtist(artist) {
+      console.log('artist: ', artist)
       this.props.findArt(artist);
     }
     render() {
@@ -81,7 +82,7 @@ class DropDown extends Component {
                 style={{cursor: 'pointer', padding: '3px 20px', display: 'block'}}
                 key={item.id}
                 onClick={() => {
-                    toggleItem(item.id, item.key);
+                    // toggleItem(item.id, item.key);
                     this.chooseArtist(`${item.name}`);
                   }
                 }>

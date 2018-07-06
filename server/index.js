@@ -48,6 +48,11 @@ app.get('/search', (req, res) => {
 		.catch(err => console.log('Err: ', err))
 })
 
+app.get('/all_artists_list', (req, res) => {
+	cloudinary.v2.api.sub_folders("artists")
+	  .then(data => res.send(data));
+});
+
 app.listen(3000, '0.0.0.0', () => {
 	console.log('Server running on port 3000...')
 });
