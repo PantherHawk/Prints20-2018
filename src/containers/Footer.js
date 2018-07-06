@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import DropDown from '../components/DropDown';
 
 class Footer extends Component {
@@ -186,4 +187,10 @@ class Footer extends Component {
     </footer>)
   }
 }
+
+// function mapStateToProps(state) {
+//   artists: Object.keys(state.art.items) || []
+// }
+
+// export default connect(mapStateToProps, null)(Footer);
 export default Footer;

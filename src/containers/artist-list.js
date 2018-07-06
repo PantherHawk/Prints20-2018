@@ -19,8 +19,7 @@ class ArtWorksList extends Component {
     this.props.fetchArt();
   }
   renderItem(item) {
-    const {items} = this.props;
-    let erroneousThing = '';
+    console.log('fired renderItem: ', item)
     return (
         <div key={item.public_id} className='grid-item'>
           <CloudinaryContext cloudName="prints20">
@@ -34,11 +33,19 @@ class ArtWorksList extends Component {
       </div>
     )
  }
+ formatArt(obj) {
+   let acc = [];
+   for (var artist in obj) {
+     acc = [...acc, ...obj[artist]]
+   }
+   return acc;
+ }
 
   render() {
     // console.log('renderlist output: ', this.renderList())
     const {error, items, loading, selected} = this.props;
-    console.log('props ', this.props);
+    const art = this.formatArt(items);
+    console.log('art: ', art)
     if (error) {
       return <div>Whoops! {error.message}</div>;
     }
@@ -92,7 +99,9 @@ class ArtWorksList extends Component {
         monitorImagesLoaded={true}
         horizontal={true}
       >
-        {items.map(item => this.renderItem(item))}
+        {art.map(el => {
+          return this.renderItem(el);
+        })}
       </StackGrid>
     </div>
   )
