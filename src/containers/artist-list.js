@@ -10,6 +10,17 @@ import StackGrid from 'react-stack-grid';
 // import Slider from 'react-slick';
 import _ from 'lodash';
 import faker from 'faker';
+import {css} from 'glamor';
+
+let collectionStage = css({
+  display: 'block',
+  paddingTop: '20px',
+  paddingLeft: '10px',
+  height: 'calc(100% - 20px)',
+  overflowX: 'scroll',
+  overflowY: 'hidden',
+  cursor: 'move'
+})
 
 class ArtWorksList extends Component {
   constructor(props) {
@@ -93,6 +104,7 @@ class ArtWorksList extends Component {
         }
       </Slider> */}
       <StackGrid
+        {...collectionStage}
         columnWidth={"33.33%"}
         gutterWidth={10}
         gutterHeigh={10}
