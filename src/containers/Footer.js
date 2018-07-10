@@ -3,6 +3,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchArtists} from '../actions/index';
 import DropDown from '../components/DropDown';
+import {css} from 'glamor';
+
+let rule = css({
+  backgroundColor: '#f0f0f5',
+  width: '100%',
+  padding: '14px 16px',
+  // boxShadow: '0 -2px 16px 0 rgba(28,29,33,.25)'
+})
 
 class Footer extends Component {
   constructor(props) {
@@ -144,7 +152,7 @@ class Footer extends Component {
     })
     this.formatList();
   }
-  formatList(el) {
+  formatList() {
     console.log('formatting list')
     let list = [];
     if (this.props.artists.length > 0) {
@@ -172,8 +180,7 @@ class Footer extends Component {
   }
   render() {
     const {artists} = this.props;
-    console.log('artists from props: ', artists)
-    return (<footer className="collection-grid-filters row">
+    return (<footer className="collection-grid-filters row" {...rule}>
       <DropDown
         className="col-sm-6"
         title="Select an Artist"
