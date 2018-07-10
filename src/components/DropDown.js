@@ -34,7 +34,7 @@ let listEl = css({
     clear: 'both',
     fontWeight: 400,
     lineHeight: 1.428571429,
-    // color: '#fff',
+    color: '#fff',
     whiteSpace: 'nowrap'
 });
 

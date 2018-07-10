@@ -18,7 +18,7 @@ let collectionStage = css({
   display: 'hidden',
   paddingTop: '20px',
   paddingLeft: '10px',
-  height: 'calc(100% - 20px)',
+  height: '100%',
   overflowX: 'scroll',
   overflowY: 'hidden',
   cursor: 'move'
@@ -88,7 +88,7 @@ class ArtWorksList extends Component {
       <Zoomer image={selected.url} />
     )
     : (
-      <div className="posts-rows" {...collectionStage}>
+      <div {...collectionStage}>
         {/* <Slider {...settings}>
 
           {
