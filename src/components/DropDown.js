@@ -52,14 +52,11 @@ class DropDown extends Component {
       this.setState({ listOpen: false });
     }
     toggleList() {
-      console.log('props in dd: ', this.props)
-      console.log('trying to toggle list')
       this.setState(prevState => ({
         listOpen: !prevState.listOpen
       }));
     }
     chooseArtist(artist) {
-      console.log('artist: ', artist)
       this.props.findArt(artist);
     }
     render() {

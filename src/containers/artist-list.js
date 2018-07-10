@@ -14,7 +14,6 @@ import faker from 'faker';
 import {css} from 'glamor';
 
 let collectionStage = css({
-  // width: '1px',
   display: 'hidden',
   paddingTop: '20px',
   paddingLeft: '10px',

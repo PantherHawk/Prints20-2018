@@ -142,35 +142,29 @@ class Footer extends Component {
       ]
     }
   }
-  fillList() {
-    return Object.keys(this.state.artists);
-  }
+  // fillList() {
+  //   return Object.keys(this.state.artists);
+  // }
   componentDidMount() {
-    this.props.fetchArtists();
-    this.setState({
-      artists: this.props.artists
-    })
-    this.formatList();
+    this.props.fetchArtists()
+    // this.formatList();
   }
-  formatList() {
-    console.log('formatting list')
-    let list = [];
-    if (this.props.artists.length > 0) {
-      for (var name in this.props.artists) {
-        console.log('name: ', name)
-        list.push({
-          id: parseInt(name, 36),
-          name: name,
-          selected: false,
-          key: 'artists'
-        })
-      }
+  componentDidUpdate(prevProps, prevState) {
+    console.log('prevProps: ', prevProps);
+    if (prevProps !== this.props && this.props.artists) {
       this.setState({
-        artists: list
+        artists: this.props.artists.map(artist => {
+          return {
+            id: parseInt(artist, 36),
+            name: artist,
+            selected: false,
+            key: 'artists'
+          }
+        })
       })
     }
-    console.log('this.state.artists: ', this.props.artists)
   }
+
   toggleSelected(id, key) {
     let temp = this.state[key];
     temp[id].selected = !temp[id].selected;
@@ -179,31 +173,25 @@ class Footer extends Component {
     })
   }
   render() {
-    const {artists} = this.props;
+    const {artists, medium, subject} = this.state;
+    console.log('artists form props: ', artists)
     return (<footer className="collection-grid-filters row" {...rule}>
       <DropDown
         className="col-sm-6"
         title="Select an Artist"
-        list={this.props.artists.map(artist => {
-          return {
-            id: parseInt(artist, 36),
-            name: artist,
-            selected: false,
-            key: 'artists'
-          }
-        })}
-        // toggleItem={this.toggleSelected.bind(this)}
+        list={artists}
+        toggleItem={this.toggleSelected.bind(this)}
       />
       <DropDown
         className="col-sm-6"
         title="Select an Period"
-        list={this.state.medium}
+        list={medium}
         toggleItem={this.toggleSelected.bind(this)}
       />
       <DropDown
         className="col-sm-6"
         title="Select a Subject"
-        list={this.state.subject}
+        list={subject}
         toggleItem={this.toggleSelected.bind(this)}
       />{/* <div className="filter-group filter-group--sorting">
         <div className="collapse-for-small" id="theFilters" aria-expanded="true" style={{
@@ -238,7 +226,7 @@ class Footer extends Component {
 
 function mapStateToProps(state) {
   if (state.art.items) {
-    console.log('refilling state in Footer with: ', state.art)
+    console.log('refilling state in Footer with: ', state)
     return {
       artists: state.artists
     }
