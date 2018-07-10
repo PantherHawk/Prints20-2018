@@ -44,6 +44,21 @@ export default function artWorksReducer(state = {}, action) {
 					return memo;
 				}, {})
 			};
+		case 'FIND_ART_BY_CONTEXT':
+		  return {
+				...state,
+				loading: false,
+				items: action.payload.reduce((memo, el) => {
+					if (el.artist === undefined || el.artist === null && !(/^(artists)[/]/).test(el.folder)) {return memo}
+					else if ((/^(artists)[/]/).test(el.folder)) {
+						let name = el.folder.split('artists/')[1];
+						memo[name] = memo[name] ? [...memo[name], {...el}] : [{...el}];
+					} else if (el.artist) {
+					memo[el.artist] = memo[el.artist] ? [...memo[el.artist], {...el}] : [{...el}];
+					return memo;
+				  }
+				}, {})
+			}
 		// case FETCH_ART:
 
 		// case FETCH_ART_FAIL:

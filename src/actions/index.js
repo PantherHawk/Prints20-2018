@@ -17,17 +17,11 @@ export async function findArt(term) {
 	let searchResult = await response.json();
 
 	console.log('data from query search: ', searchResult);
-	_.forIn(searchResult.resources, (datum) => {
-		if (datum.context) {
-			_.merge(datum, datum.context.custom)
-			delete datum.context;
-			console.log('after merge: ', datum)
-		}
-	})
+	let art = unnestifyObjectsIn(searchResult.resources);
 
 	return {
 		type: 'SEARCH',
-		payload: searchResult.resources
+		payload: art
 	}
 }
 
@@ -41,4 +35,36 @@ export async function fetchArtists() {
 		type: 'GET_ALL_ARTISTS',
 		payload: names
 	}
+}
+
+export async function findArtByContext(key, value) {
+	// handle dates
+	// if key is period
+	let regex;
+	if (key === 'period') {
+		let digits = value.slice(0, 2);
+		regex = /^(digits)\d{1}$/;
+	}
+	//  grab first digits
+	//  set up regex
+	let response = await fetch(`/api/context?key=${key}&value=${value.slice(0, 3)}`);
+	let result = await response.json();
+	console.log('result of art search by period: ', result);
+	let art = unnestifyObjectsIn(result.resources);
+	console.log('art for payload: ', art)
+	return {
+		type: 'FIND_ART_BY_CONTEXT',
+		payload: art
+	}
+}
+
+function unnestifyObjectsIn(list) {
+	return _.forIn(list, (datum) => {
+		if (datum.context) {
+      _.merge(datum, datum.context.custom)
+			delete datum.context;
+		} else {
+			return datum;
+		}
+	});
 }

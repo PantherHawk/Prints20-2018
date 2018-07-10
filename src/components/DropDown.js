@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {findArt} from '../actions/index';
+import {findArt, findArtByContext} from '../actions/index';
 import onClickOutside from 'react-onclickoutside';
 import { css, hover, focus } from 'glamor';
 import styled from 'styled-components';
@@ -56,14 +56,14 @@ class DropDown extends Component {
         listOpen: !prevState.listOpen
       }));
     }
-    chooseArtist(artist) {
-      this.props.findArt(artist);
+    chooseContext(key, value) {
+      this.props.findArtByContext(key, value);
     }
     render() {
       const {list, toggleItem} = this.props;
       const {listOpen, headerTitle} = this.state;
       return (
-        <div className="dd-wrapper col-sm-4">
+        <div className="dd-wrapper col-sm-3">
           <div className="dd-header" onClick={() => this.toggleList()}>
             <div className="dd-header-title">{headerTitle}</div>
             {listOpen
@@ -80,7 +80,7 @@ class DropDown extends Component {
                 key={item.id}
                 onClick={() => {
                     // toggleItem(item.id, item.key);
-                    this.chooseArtist(`${item.name}`);
+                    this.chooseContext(`${item.key}`, `${item.name}`);
                   }
                 }>
                 <span className="text" style={{marginRight: '34px'}}>{item.name ? `${item.name}` : item.date} {item.selected && <FontAwesome name="check"/>}</span>
@@ -97,7 +97,10 @@ function mapDispatchToProps(dispatch) {
   // should be passed to all our reducers
   // the dispatch function receives all the actions and
   // spits them out to all of the different reducers.
-  return bindActionCreators({ findArt: findArt }, dispatch);
+  return bindActionCreators({
+    findArt: findArt,
+    findArtByContext: findArtByContext
+  }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(onClickOutside(DropDown));

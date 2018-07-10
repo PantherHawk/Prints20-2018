@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchArtists} from '../actions/index';
+import {fetchArtists, findArtByContext} from '../actions/index';
 import DropDown from '../components/DropDown';
 import {css} from 'glamor';
 
@@ -95,6 +95,20 @@ class Footer extends Component {
           key: 'medium'
         },
       ],
+      period: [
+        {
+          id: 0,
+          name: '1966',
+          selected: false,
+          key: 'period'
+        },
+        {
+          id: 0,
+          name: '1910',
+          selected: false,
+          key: 'period'
+        }
+      ],
       subject: [
         {
           id: 0,
@@ -158,7 +172,7 @@ class Footer extends Component {
             id: parseInt(artist, 36),
             name: artist,
             selected: false,
-            key: 'artists'
+            key: 'artist'
           }
         })
       })
@@ -173,11 +187,11 @@ class Footer extends Component {
     })
   }
   render() {
-    const {artists, medium, subject} = this.state;
+    const {artists, medium, subject, period} = this.state;
     console.log('artists form props: ', artists)
     return (<footer className="collection-grid-filters row" {...rule}>
       <DropDown
-        className="col-sm-6"
+        className="col-sm-3"
         title="Select an Artist"
         list={artists}
         toggleItem={this.toggleSelected.bind(this)}
@@ -185,11 +199,17 @@ class Footer extends Component {
       <DropDown
         className="col-sm-6"
         title="Select an Period"
+        list={period}
+        toggleItem={this.toggleSelected.bind(this)}
+      />
+      <DropDown
+        className="col-sm-3"
+        title="Select an Medium"
         list={medium}
         toggleItem={this.toggleSelected.bind(this)}
       />
       <DropDown
-        className="col-sm-6"
+        className="col-sm-3"
         title="Select a Subject"
         list={subject}
         toggleItem={this.toggleSelected.bind(this)}
@@ -228,7 +248,7 @@ function mapStateToProps(state) {
   if (state.art.items) {
     console.log('refilling state in Footer with: ', state)
     return {
-      artists: state.artists
+      artists: state.artists,
     }
   } else {
     return {
@@ -240,6 +260,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    findArtByContext: findArtByContext,
     fetchArtists: fetchArtists
   }, dispatch);
 };
