@@ -5,7 +5,7 @@ import Zoomer from '../components/Zoomer';
 import {selectArtWork, selectArtist} from '../actions/index';
 import {fetchArt} from '../actions/artActions.js';
 import {bindActionCreators} from 'redux';
-// import {CloudinaryContext, Image, Transformation} from 'cloudinary-react';
+import {CloudinaryContext, Image, Transformation} from 'cloudinary-react';
 import StackGrid from 'react-stack-grid';
 import GridItem from '../components/GridItem';
 // import Slider from 'react-slick';
@@ -14,7 +14,7 @@ import faker from 'faker';
 import {css} from 'glamor';
 
 let collectionStage = css({
-  width: '1px',
+  // width: '1px',
   display: 'hidden',
   paddingTop: '20px',
   paddingLeft: '10px',
@@ -31,21 +31,21 @@ class ArtWorksList extends Component {
   componentDidMount() {
     this.props.fetchArt();
   }
- //  renderItem(item) {
- //    console.log('fired renderItem: ', item)
- //    return (
- //        <div key={item.public_id} className='grid-item'>
- //          <CloudinaryContext cloudName="prints20">
- //            <Image publicId={item.public_id} onClick={() => {
- //              this.props.selectArtWork(item);
- //            }} className={item.alt}>
- //            <Transformation height="200" crop="scale"/>
- //          </Image>
- //        </CloudinaryContext>
- //        <span>{item.caption}</span>
- //      </div>
- //    )
- // }
+  renderItem(item) {
+    console.log('fired renderItem: ', item)
+    return (
+        <div key={item.public_id} className='grid-item'>
+          <CloudinaryContext cloudName="prints20">
+            <Image publicId={item.public_id} width="100%" onClick={() => {
+              this.props.selectArtWork(item);
+            }} className={item.alt}>
+            <Transformation width="150" crop="scale"/>
+          </Image>
+        </CloudinaryContext>
+        <span>{item.caption}</span>
+      </div>
+    )
+ }
  formatArt(obj) {
    let acc = [];
    for (var artist in obj) {
@@ -88,7 +88,7 @@ class ArtWorksList extends Component {
       <Zoomer image={selected.url} />
     )
     : (
-      <div className="posts-rows">
+      <div className="posts-rows" {...collectionStage}>
         {/* <Slider {...settings}>
 
           {
@@ -106,18 +106,15 @@ class ArtWorksList extends Component {
         }
       </Slider> */}
       <StackGrid
-        {...collectionStage}
-        columnWidth={"33.33%"}
+        columnWidth={150}
         // gutterWidth={10}
-        gutterHeight={10}
-        component={GridItem}
-        monitorImagesLoaded={true}
-        horizontal={true}
+        // gutterHeight={10}
+        // monitorImagesLoaded={true}
+        // horizontal={true}
       >
+
         {art.map(piece => {
-          return (
-            <GridItem sex="male" art={piece} />
-          );
+          return this.renderItem(piece);
         })}
       </StackGrid>
     </div>
