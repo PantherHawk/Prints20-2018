@@ -58,9 +58,9 @@ export async function findArtByContext(key, value) {
 	let response = await fetch(`/api/context?key=${key}&value=${value}`);
 	console.log('response: ', response)
 	let result = await response.json();
-	console.log('result of art search by period: ', result.resources[0].context);
 	let art = unnestifyObjectsIn(result.resources);
 	console.log('art for payload findArtByContext: ', art)
+	console.log('what is art? :', art)
 	return {
 		type: 'FIND_ART_BY_CONTEXT',
 		payload: art

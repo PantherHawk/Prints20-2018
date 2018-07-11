@@ -41,6 +41,9 @@ class ArtWorksList extends Component {
   }
   renderItem(item) {
     console.log('fired renderItem: ', item)
+    if (item.noArt) {
+      return (<div key={item.noArt}><p class="h2">{item.noArt}</p></div> )
+    }
     return (
         <div key={item.public_id} className='grid-item'>
           <CloudinaryContext cloudName="prints20">
@@ -68,6 +71,9 @@ class ArtWorksList extends Component {
    let acc = [];
    for (var artist in obj) {
      acc = [...acc, ...obj[artist]]
+   }
+   if (acc.length < 1) {
+     return [{ noArt: 'No pieces found.' }];
    }
    return acc;
  }
@@ -138,7 +144,6 @@ class ArtWorksList extends Component {
             hideArt: false
         }) )}
       >
-
         {this.state.hideArt ? '' : art.map(piece => {
           return this.renderItem(piece);
         })}
