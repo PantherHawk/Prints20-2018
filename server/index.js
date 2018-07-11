@@ -83,13 +83,27 @@ app.get('/context', (req, res) => {
 				res.send(json);
 			})
 			.catch(err => console.log('Err: ', err));
-	} else if (contextKey === 'artist' || contextKey === 'medium') {
+	} else if (contextKey === 'medium') {
 	  cloudinary.v2.api.resources_by_context(`${contextKey}`, `${contextVal}`, {resource_type: 'image'})
 	    .then(data => {
 		  	console.log('data from period dropdown select', data)
 			  res.send(data);
 	  	})
 		  .catch(err => console.log('Err: ', err))
+	} else if (contextKey === 'artist') {
+		cloudinary.v2.search
+		  .expression(`folder:${contextVal}/*`)
+			.with_field('context')
+			.with_field('tags')
+			.max_results(30)
+			.execute()
+			.then(data => {
+				console.log('data from dropdown select: ', data)
+				res.json(data)
+			})
+			.then(json => {
+				res.send(json);
+			})
 	}
 })
 

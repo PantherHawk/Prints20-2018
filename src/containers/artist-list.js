@@ -127,15 +127,19 @@ class ArtWorksList extends Component {
           })
         }
       </Slider> */}
-      <StackGrid 
+      <StackGrid
         columnWidth={150}
         // gutterWidth={10}
         // gutterHeight={10}
         // monitorImagesLoaded={true}
         // horizontal={true}
+        onAnimationEnd={
+          () => this.setState((prevState, props) => ({
+            hideArt: false
+        }) )}
       >
 
-        {art.map(piece => {
+        {this.state.hideArt ? '' : art.map(piece => {
           return this.renderItem(piece);
         })}
       </StackGrid>
