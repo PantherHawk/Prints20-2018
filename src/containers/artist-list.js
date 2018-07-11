@@ -11,7 +11,28 @@ import GridItem from '../components/GridItem';
 // import Slider from 'react-slick';
 import _ from 'lodash';
 // import faker from 'faker';
-import {css} from 'glamor';
+import {css, hover} from 'glamor';
+
+let overlay = css({
+  position: 'absolute',
+  top: '0',
+  bottom: '0',
+  left: '0',
+  right: '0',
+  height: '100%',
+  width: '100%',
+  opacity: '0',
+  transition: '.3s ease',
+  backgroundColor: '#008CBA',
+})
+
+let gridItem = css({
+  display: 'block',
+  width: '100%',
+  height: 'auto'
+});
+
+
 
 let collectionStage = css({
   display: 'hidden',
@@ -20,7 +41,7 @@ let collectionStage = css({
   height: '100%',
   overflowX: 'scroll',
   overflowY: 'hidden',
-  cursor: 'move'
+  cursor: 'pointer'
 })
 
 let hideAway = css({
@@ -39,13 +60,23 @@ class ArtWorksList extends Component {
   componentDidMount() {
     this.props.fetchArt();
   }
+  // displayOverlay(item) {
+  //   console.log('hovering!')
+  //   return (
+  //
+  //   );
+  // }
   renderItem(item) {
     console.log('fired renderItem: ', item)
     if (item.noArt) {
       return (<div key={item.noArt}><p class="h2">{item.noArt}</p></div> )
     }
     return (
-        <div key={item.public_id} className='grid-item'>
+        <div key={item.public_id} className='grid-item'
+          // onMouseEnter={() => this.displayOverlay(item)}
+          {...hover({opacity: '1'})}
+          >
+
           <CloudinaryContext cloudName="prints20">
             <Image {...this.state.hideArt ? {...hideAway} : ''}
                publicId={item.public_id}
@@ -57,6 +88,15 @@ class ArtWorksList extends Component {
               //   hideArt: !prevState.hideArt
               // }));
             }} className={item.alt}>
+            <div className="collection-grid-item " {...overlay}>
+              <span className="collection-grid-item__title h3">
+                {item.title}
+              </span>
+              <span className="collection-grid-item__artist h6">
+                {item.artist}
+              </span>
+              <span className="btn btn-default btn-sm btn-outline btn-white">View Artwork</span>
+            </div>
             <Transformation width="150" crop="scale"/>
           </Image>
         </CloudinaryContext>
