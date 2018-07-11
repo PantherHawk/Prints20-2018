@@ -58,7 +58,14 @@ app.get('/context', (req, res) => {
 			.with_field('context')
 			.with_field('tags')
 			.execute()
-			.then(result => res.send(result))
+			.then(data => {
+				console.log('data: ', data)
+				res.json(data);
+			})
+			.then(json => {
+				console.log('result: ', json)
+				res.send(json);
+			})
 			.catch(err => console.log('Err: ', err));
 
 

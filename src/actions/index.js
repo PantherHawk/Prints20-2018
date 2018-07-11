@@ -48,10 +48,11 @@ export async function findArtByContext(key, value) {
 	//  grab first digits
 	//  set up regex
 	let response = await fetch(`/api/context?key=${key}&value=${value.slice(0, 3)}`);
+	console.log('response: ', response)
 	let result = await response.json();
-	console.log('result of art search by period: ', result);
+	console.log('result of art search by period: ', result.resources[0].context);
 	let art = unnestifyObjectsIn(result.resources);
-	console.log('art for payload: ', art)
+	console.log('art for payload findArtByContext: ', art)
 	return {
 		type: 'FIND_ART_BY_CONTEXT',
 		payload: art
@@ -61,8 +62,15 @@ export async function findArtByContext(key, value) {
 function unnestifyObjectsIn(list) {
 	return _.forIn(list, (datum) => {
 		if (datum.context) {
-      _.merge(datum, datum.context.custom)
-			delete datum.context;
+			console.log('yeah, got context', datum.context);
+			if (datum.context.custom) {
+        _.merge(datum, datum.context.custom);
+			  console.log('return val of unnesting: ', list)
+				delete datum.context;
+		  } else {
+				_.merge(datum, datum.context);
+				delete datum.context;
+			}
 		} else {
 			return datum;
 		}
