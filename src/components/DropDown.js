@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {findArt, findArtByContext} from '../actions/index';
+import {findArt, findArtByContext, hideArt} from '../actions/index';
 import onClickOutside from 'react-onclickoutside';
 import { css, hover, focus } from 'glamor';
 import styled from 'styled-components';
@@ -58,6 +58,7 @@ class DropDown extends Component {
     }
     chooseContext(key, value) {
       this.props.findArtByContext(key, value);
+      this.props.hideArt(!this.state.artHidden);
     }
     render() {
       const {list, toggleItem} = this.props;
@@ -99,8 +100,14 @@ function mapDispatchToProps(dispatch) {
   // spits them out to all of the different reducers.
   return bindActionCreators({
     findArt: findArt,
-    findArtByContext: findArtByContext
+    findArtByContext: findArtByContext,
+    hideArt: hideArt
   }, dispatch);
+}
+
+function mapStateToProps(state) {
+  console.log('state: ', state)
+  // return { artHidden: state.artHidden };
 }
 
 export default connect(null, mapDispatchToProps)(onClickOutside(DropDown));

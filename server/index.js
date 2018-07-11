@@ -52,7 +52,7 @@ app.get('/context', (req, res) => {
 	console.log('query params: ', req.query)
 	let contextKey = req.query.key;
 	let contextVal = req.query.value;
-	// if (contextKey = 'period') {
+	if (contextKey === 'period') {
 		cloudinary.v2.search
 		  .expression(`${contextVal}*`)
 			.with_field('context')
@@ -67,15 +67,30 @@ app.get('/context', (req, res) => {
 				res.send(json);
 			})
 			.catch(err => console.log('Err: ', err));
-
-
-	// cloudinary.v2.api.resources_by_context(`${contextKey}`, `${contextVal}`, {resource_type: 'image'})
-	//   .then(data => {
-	// 		console.log('data from period dropdown select', data)
-	// 		res.send(data);
-	// 	})
-	// 	.catch(err => console.log('Err: ', err))
-
+  } else if (contextKey === 'subject') {
+		cloudinary.v2.search
+		  .expression(`resource_type:image AND tags=${contextVal}`)
+			.with_field('context')
+			.with_field('tags')
+			.max_results(30)
+			.execute()
+			.then(data => {
+				console.log('data: ', data);
+				res.json(data);
+			})
+			.then(json => {
+				console.log('result: ', json);
+				res.send(json);
+			})
+			.catch(err => console.log('Err: ', err));
+	} else if (contextKey === 'artist' || contextKey === 'medium') {
+	  cloudinary.v2.api.resources_by_context(`${contextKey}`, `${contextVal}`, {resource_type: 'image'})
+	    .then(data => {
+		  	console.log('data from period dropdown select', data)
+			  res.send(data);
+	  	})
+		  .catch(err => console.log('Err: ', err))
+	}
 })
 
 app.get('/all_artists_list', (req, res) => {

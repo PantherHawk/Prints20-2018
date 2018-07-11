@@ -90,8 +90,13 @@ export default function artWorksReducer(state = {}, action) {
         ...state,
         loading: false,
         items: action.payload.reduce((memo, el) => {
+          if (el.folder) {
+            console.log('folder name: ', el.folder)
+          }
+          let regex = /^(artists)[/]/;
           console.log('art object in reducer: ', el)
-          if (el.artist === undefined || el.artist === null && !(/^(artists)[/]/).test(el.folder)) {
+          if ((el.artist === undefined || el.artist === null) && el.folder.slice(5) !== 'artist') {
+            console.log('no artist key, no "artist" folder')
             return memo;
           } else if (el.artist) {
             memo[el.artist] = memo[el.artist]
@@ -106,7 +111,7 @@ export default function artWorksReducer(state = {}, action) {
                 }
               ];
             return memo;
-          } else if ((/^(artists)[/]/).test(el.folder)) {
+          } else if (regex.test(el.folder)) {
             console.log('here?')
             let name = el.folder.split('artists/')[1];
             memo[name] = memo[name]
@@ -121,6 +126,7 @@ export default function artWorksReducer(state = {}, action) {
                 }
               ];
 							return memo;
+              console.log('after dealing with "folder": ', memo)
 						}
           }, {})}
         // case FETCH_ART:

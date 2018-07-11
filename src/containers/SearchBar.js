@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { findArt } from '../actions';
+import { findArt, hideArt } from '../actions';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -22,7 +22,12 @@ class SearchBar extends Component {
   }
   render() {
     return (
-      <form onSubmit={e => this.onSearchSubmit(e)} className="input-group">
+      <form onSubmit={
+        e => {
+          this.onSearchSubmit(e)
+          this.props.hideArt(!this.state.artHidden)
+        }
+      } className="input-group">
         <input
           placeholder="what sort of art are you interested in?"
           className="form-control"
@@ -39,12 +44,14 @@ class SearchBar extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ findArt }, dispatch);
+  return bindActionCreators({ findArt, hideArt }, dispatch);
 }
 
-// function mapStateToProps({works}) {
-//   // TODO: fill props with state
-// }
+function mapStateToProps({artHidden}) {
+  return {
+    artHidden: artHidden
+  }
+}
 
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ArtWorkDetail from '../containers/artwork-detail';
 import Zoomer from '../components/Zoomer';
-import {selectArtWork, selectArtist} from '../actions/index';
+import {selectArtWork, selectArtist, hideArt} from '../actions/index';
 import {fetchArt} from '../actions/artActions.js';
 import {bindActionCreators} from 'redux';
 import {CloudinaryContext, Image, Transformation} from 'cloudinary-react';
@@ -10,7 +10,7 @@ import StackGrid from 'react-stack-grid';
 import GridItem from '../components/GridItem';
 // import Slider from 'react-slick';
 import _ from 'lodash';
-import faker from 'faker';
+// import faker from 'faker';
 import {css} from 'glamor';
 
 let collectionStage = css({
@@ -23,9 +23,18 @@ let collectionStage = css({
   cursor: 'move'
 })
 
+let hideAway = css({
+  visibility: 'hidden',
+  opacity: '0',
+  transition: 'visibility 0s 2s, opacity 2s linear'
+})
+
 class ArtWorksList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hideArt: false
+    }
   }
   componentDidMount() {
     this.props.fetchArt();
@@ -35,8 +44,15 @@ class ArtWorksList extends Component {
     return (
         <div key={item.public_id} className='grid-item'>
           <CloudinaryContext cloudName="prints20">
-            <Image publicId={item.public_id} width="100%" onClick={() => {
+            <Image {...this.state.hideArt ? {...hideAway} : ''}
+               publicId={item.public_id}
+               width="100%"
+               onClick={() => {
               this.props.selectArtWork(item);
+              this.props.hideArt(!this.state.hideArt);
+              // this.setState((prevState, props) => ({
+              //   hideArt: !prevState.hideArt
+              // }));
             }} className={item.alt}>
             <Transformation width="150" crop="scale"/>
           </Image>
@@ -44,6 +60,9 @@ class ArtWorksList extends Component {
         <span>{item.caption}</span>
       </div>
     )
+    this.setState((prevState, props) => ({
+      hideArt: !prevState.hideArt
+    }));
  }
  formatArt(obj) {
    let acc = [];
@@ -79,6 +98,10 @@ class ArtWorksList extends Component {
       onClick: function(e) {
         console.log('e: ', e)
         this.props.selectArtWork(artist);
+        // this.props.hideArt(!this.state.artHidden)
+        this.setState((prevState, props) => ({
+          hideArt: !prevState.hideArt
+        }));
         // this.props.selectArtist(artist);
       }
     };
@@ -104,7 +127,7 @@ class ArtWorksList extends Component {
           })
         }
       </Slider> */}
-      <StackGrid
+      <StackGrid 
         columnWidth={150}
         // gutterWidth={10}
         // gutterHeight={10}
@@ -129,7 +152,8 @@ function mapDispatchToProps(dispatch) {
   // spits them out to all of the different reducers.
   return bindActionCreators({
     selectArtWork: selectArtWork,
-    fetchArt: fetchArt
+    fetchArt: fetchArt,
+    hideArt: hideArt
   }, dispatch);
 }
 
@@ -141,7 +165,8 @@ function mapStateToProps(state) {
     items: state.art.items,
     loading: state.art.loading,
     error: state.art.error,
-    selected: state.activeArtWork
+    selected: state.activeArtWork,
+    artHidden: state.artHidden
   };
 }
 

@@ -25,6 +25,13 @@ export async function findArt(term) {
 	}
 }
 
+export function hideArt(bool) {
+	return {
+		type: 'HIDE_ART',
+		payload: bool
+	}
+}
+
 export async function fetchArtists() {
 	let response = await fetch(`/api/all_artists_list`);
 	let result = await response.json();
@@ -47,7 +54,8 @@ export async function findArtByContext(key, value) {
 	}
 	//  grab first digits
 	//  set up regex
-	let response = await fetch(`/api/context?key=${key}&value=${value.slice(0, 3)}`);
+	value = key === 'period' ? value.slice(0, 3) : value;
+	let response = await fetch(`/api/context?key=${key}&value=${value}`);
 	console.log('response: ', response)
 	let result = await response.json();
 	console.log('result of art search by period: ', result.resources[0].context);
