@@ -5,34 +5,15 @@ import Zoomer from '../components/Zoomer';
 import {selectArtWork, selectArtist, hideArt} from '../actions/index';
 import {fetchArt} from '../actions/artActions.js';
 import {bindActionCreators} from 'redux';
-import {CloudinaryContext, Image, Transformation} from 'cloudinary-react';
 import StackGrid from 'react-stack-grid';
 import GridItem from '../components/GridItem';
+import ImageCard from '../components/ImageCard'
 // import Slider from 'react-slick';
 import _ from 'lodash';
 // import faker from 'faker';
 import {css, hover} from 'glamor';
 
-let overlay = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '0',
-  left: '0',
-  right: '0',
-  height: '100%',
-  width: '100%',
-  opacity: '0',
-  transition: '.3s ease',
-  backgroundColor: '#008CBA',
-})
-
-let gridItem = css({
-  display: 'block',
-  width: '100%',
-  height: 'auto'
-});
-
-
+let gridItem = css({display: 'block', width: '100%', height: 'auto'});
 
 let collectionStage = css({
   display: 'hidden',
@@ -44,11 +25,7 @@ let collectionStage = css({
   cursor: 'pointer'
 })
 
-let hideAway = css({
-  visibility: 'hidden',
-  opacity: '0',
-  transition: 'visibility 0s 2s, opacity 2s linear'
-})
+let hideAway = css({visibility: 'hidden', opacity: '0', transition: 'visibility 0s 2s, opacity 2s linear'})
 
 class ArtWorksList extends Component {
   constructor(props) {
@@ -60,63 +37,38 @@ class ArtWorksList extends Component {
   componentDidMount() {
     this.props.fetchArt();
   }
-  // displayOverlay(item) {
-  //   console.log('hovering!')
-  //   return (
-  //
-  //   );
-  // }
+
   renderItem(item) {
     console.log('fired renderItem: ', item)
     if (item.noArt) {
-      return (<div key={item.noArt}><p class="h2">{item.noArt}</p></div> )
+      return (<div key={item.noArt}>
+        <p class="h2">{item.noArt}</p>
+      </div>)
     }
     return (
-        <div key={item.public_id} className='grid-item'
-          // onMouseEnter={() => this.displayOverlay(item)}
-          {...hover({opacity: '1'})}
-          >
-
-          <CloudinaryContext cloudName="prints20">
-            <Image {...this.state.hideArt ? {...hideAway} : ''}
-               publicId={item.public_id}
-               width="100%"
-               onClick={() => {
-              this.props.selectArtWork(item);
-              this.props.hideArt(!this.state.hideArt);
-              // this.setState((prevState, props) => ({
-              //   hideArt: !prevState.hideArt
-              // }));
-            }} className={item.alt}>
-            <div className="collection-grid-item " {...overlay}>
-              <span className="collection-grid-item__title h3">
-                {item.title}
-              </span>
-              <span className="collection-grid-item__artist h6">
-                {item.artist}
-              </span>
-              <span className="btn btn-default btn-sm btn-outline btn-white">View Artwork</span>
-            </div>
-            <Transformation width="150" crop="scale"/>
-          </Image>
-        </CloudinaryContext>
-        <span>{item.caption}</span>
-      </div>
+      <ImageCard item={{...item}} />
     )
     this.setState((prevState, props) => ({
       hideArt: !prevState.hideArt
     }));
- }
- formatArt(obj) {
-   let acc = [];
-   for (var artist in obj) {
-     acc = [...acc, ...obj[artist]]
-   }
-   if (acc.length < 1) {
-     return [{ noArt: 'No pieces found.' }];
-   }
-   return acc;
- }
+  }
+  formatArt(obj) {
+    let acc = [];
+    for (var artist in obj) {
+      acc = [
+        ...acc,
+        ...obj[artist]
+      ]
+    }
+    if (acc.length < 1) {
+      return [
+        {
+          noArt: 'No pieces found.'
+        }
+      ];
+    }
+    return acc;
+  }
 
   render() {
     // console.log('renderlist output: ', this.renderList())
@@ -143,7 +95,7 @@ class ArtWorksList extends Component {
 
       onClick: function(e) {
         console.log('e: ', e)
-        this.props.selectArtWork(artist);
+        // this.props.selectArtWork(artist);
         // this.props.hideArt(!this.state.artHidden)
         this.setState((prevState, props) => ({
           hideArt: !prevState.hideArt
@@ -151,12 +103,9 @@ class ArtWorksList extends Component {
         // this.props.selectArtist(artist);
       }
     };
-    return selected ?
-    (
-      <Zoomer image={selected.url} />
-    )
-    : (
-      <div {...collectionStage}>
+    return selected
+      ? (<Zoomer image={selected.url}/>)
+      : (<div {...collectionStage}>
         {/* <Slider {...settings}>
 
           {
@@ -172,24 +121,26 @@ class ArtWorksList extends Component {
             return this.renderItem(item)
           })
         }
-      </Slider> */}
-      <StackGrid
-        columnWidth={150}
-        // gutterWidth={10}
-        // gutterHeight={10}
-        // monitorImagesLoaded={true}
-        // horizontal={true}
-        onAnimationEnd={
-          () => this.setState((prevState, props) => ({
-            hideArt: false
-        }) )}
-      >
-        {this.state.hideArt ? '' : art.map(piece => {
-          return this.renderItem(piece);
-        })}
-      </StackGrid>
-    </div>
-  )
+      </Slider> */
+        }
+        <StackGrid columnWidth={150}
+          // gutterWidth={10}
+
+          // gutterHeight={10}
+
+          // monitorImagesLoaded={true}
+
+          // horizontal={true}
+          onAnimationEnd={() => this.setState((prevState, props) => ({hideArt: false}))}>
+          {
+            this.state.hideArt
+              ? ''
+              : art.map(piece => {
+                return (<div key={piece.name}>{this.renderItem(piece)}</div>)
+              })
+          }
+        </StackGrid>
+      </div>)
 
   }
 }
