@@ -9,6 +9,8 @@ import promiseMiddleware from 'redux-promise';
 import App from './components/App';
 import Gallery from './components/Gallery';
 import reducers from './reducers';
+import './style.css';
+
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
 const store = createStoreWithMiddleware(

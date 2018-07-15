@@ -9,17 +9,7 @@ import {bindActionCreators} from 'redux';
 // import '../styles/ImageCard.css';
 import styled from 'styled-components';
 
-
-const imageContainer = styled.div`
-  position: relative;
-  width: 200px;
-  height: 300px;
-  &:hover ${imageContainerAfter} {
-    display: block;
-    background: rgba(0, 0, 0, .6);
-  }
-`
-const imageContainerAfter = styled.div`
+const imageContainerAfter = styled.div `
   position: absolute;
   top: 0;
   left: 0;
@@ -29,7 +19,7 @@ const imageContainerAfter = styled.div`
   color: #FFF;
 `
 
-const hoverability = styled.div`
+const hoverability = styled.div `
 
 `
 
@@ -64,97 +54,97 @@ const hoverability = styled.div`
 //     }
 //   }
 
-  // let overlay = css({
-  //   width: '100 %',
-  //   height: '100 %',
-  //   position: 'absolute',
-  //   opacity: '0',
-  //   background: '#000',
-  //   transition: 'opacity 200ms ease-in-out',
-  //   // borderRadius: '4px',
-  //   // margin: '-15px 0 0 -15px',
-  //   '&:hover': {
-  //     width: '100%',
-  //     height: '100%',
-  //     position: 'absolute',
-  //     backgroundColor: '#000',
-  //     opacity: '0.5'
-  //   }
-  // });
+// let overlay = css({
+//   width: '100 %',
+//   height: '100 %',
+//   position: 'absolute',
+//   opacity: '0',
+//   background: '#000',
+//   transition: 'opacity 200ms ease-in-out',
+//    borderRadius: '4px',
+//    margin: '-15px 0 0 -15px',
+//   '&:hover': {
+//     width: '100%',
+//     height: '100%',
+//     position: 'absolute',
+//     backgroundColor: '#000',
+//     opacity: '0.5'
+//   }
+// });
 
 class ImageCard extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        hovered: false
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovered: false
     }
-    render() {
-      // styles.overlay.opacity = '0';
-      // styles.overlayText.opacity = '0';
-      // let overlayStyles = styles.overlay;
-      // let textStyles = styles.overlayText;
-      // let overlayImageStyles = styles.overlayImage;
-      let {item} = this.props;
-      let url = item.url;
-      let {hovered} = this.state;
-      return (
-      // hovered ?
-      //
-      // :
-      <div key={item.public_id} /*{...hovered && {...overlay}}*/
-  className='grid-item' onMouseEnter={() => {
-          this.setState((prevState, props) => ({hovered: true}))
-          console.log('state changed to hovered')
-        }} onMouseLeave={() => {
-          this.setState((prevState, props) => ({hovered: false}))
-          console.log('hovered state turned off.')
-        }}>
+  }
+  render() {
+    // styles.overlay.opacity = '0';
+    // styles.overlayText.opacity = '0';
+    // let overlayStyles = styles.overlay;
+    // let textStyles = styles.overlayText;
+    // let overlayImageStyles = styles.overlayImage;
+    let {item} = this.props;
+    let {url} = item;
+    let {hovered} = this.state;
+    return (
+    // hovered ?
+    //
+    // :
+    <div className='grid-item resource' key={item.public_id} /*{...hovered && {...overlay}}*/
+  onMouseEnter={() => {
+        this.setState((prevState, props) => ({hovered: true}))
+        console.log('state changed to hovered')
+      }} onMouseLeave={() => {
+        this.setState((prevState, props) => ({hovered: false}))
+        console.log('hovered state turned off.')
+      }}>
 
-        <CloudinaryContext cloudName="prints20">
-          <imageContainer className="image-container" >
-            <Image {...this.state.hideArt ? {...hideAway} : ''} publicId={item.public_id} width="100%" onClick={() => {
-                this.props.selectArtWork(item);
-                this.props.hideArt(!this.state.hideArt);
-                // this.setState((prevState, props) => ({
-                //   hideArt: !prevState.hideArt
-                // }));
-              }}
-              // style={{WebkitFilter: 'brightness(100%)', background: `url(${url})`}}
+      <CloudinaryContext cloudName="prints20">
+        <Image {...this.state.hideArt ? {...hideAway} : ''} publicId={item.public_id} width="100%" onClick={() => {
+            this.props.selectArtWork(item);
+            this.props.hideArt(!this.state.hideArt);
+            // this.setState((prevState, props) => ({
+            //   hideArt: !prevState.hideArt
+            // }));
+          }}
+          // style={{background: `url(${url})`}}
 
-              // {...hovered && {...imgOverlay}}
-            >
-              <div className="panel panel-default">
-                <div className="panel-body">
-                  <div className="overlay">
-                    <div className="collection-grid-item ">
-                      <button className="btn btn-primary">View Artwork</button>
-                      <span className="collection-grid-item__title h3">
-                        {item.title}
-                      </span>
-                      <span className="collection-grid-item__artist h6">
+          // {...hovered && {...imgOverlay}}
+        >
+          {/* <div className="panel panel-default"> */}
+          {/* <div className="panel-body"> */}
+
+          {/* <div className="collection-grid-item "> */}
+
+          {/* <span className="collection-grid-item__title h3"> */}
+          {/* {item.title} */}
+          {/* </span> */}
+          {/* <span className="collection-grid-item__artist h6">
                         {item.artist}
-                      </span>
-                      <span className="btn btn-default btn-sm btn-outline btn-white">View Artwork</span>
-                    </div>
-                    <Transformation width="150" crop="scale"/>
-                  </div>
-                </div>
-              </div>
-            </Image>
-            <imageContainerAfter className="after"></imageContainerAfter>
-          </imageContainer>
-        </CloudinaryContext>
-        <span>{item.caption}</span>
-      </div>)
-    }
-  }
+                      </span> */
+          }
+          {/* <span className="btn btn-default btn-sm btn-outline btn-white">View Artwork</span> */}
+          {/* </div> */}
+          <Transformation width="150" crop="scale"/> {/* </div> */}
+          {/* </div> */}
+        </Image>
+        <div id="overlay">
+          <button>View Artwork</button>
+        </div>
 
-  function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-      selectArtWork: selectArtWork,
-      hideArt: hideArt
-    }, dispatch);
+      </CloudinaryContext>
+      {/* <span>{item.caption}</span> */}
+    </div>)
   }
+}
 
-  export default connect(null, mapDispatchToProps)(ImageCard);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    selectArtWork: selectArtWork,
+    hideArt: hideArt
+  }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(ImageCard);
