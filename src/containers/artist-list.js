@@ -124,6 +124,7 @@ class ArtWorksList extends Component {
       </Slider> */
         }
         <StackGrid columnWidth={150}
+          monitorImagesLoaded={true}
           // gutterWidth={10}
 
           // gutterHeight={10}

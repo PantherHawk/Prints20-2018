@@ -191,6 +191,12 @@ class Footer extends Component {
     })
   }
   render() {
+    const phantom = {
+      display: 'block',
+      // padding: '20px',
+      // height: '60px',
+      width: '100%',
+    }
     const {artists, medium, subject, period} = this.state;
     const Dropdowns = () => (
       <div className="filter-group filter-group--filtering">
@@ -221,6 +227,7 @@ class Footer extends Component {
       </div>)
     console.log('artists form props: ', artists)
     return (<footer className="collection-grid-filters row" {...rule}>
+      <div style={phantom} />
       <a className="collection-filters-toggle btn btn-collapse">
         <div className="filter-text">
       <button onClick={() => this.toggleHidden()}><span>{this.state.isHidden ? <FontAwesome name="plus" size="2x" /> : <FontAwesome name="minus" size="2x" />}</span></button></div></a>

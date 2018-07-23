@@ -13,9 +13,12 @@ export default class Gallery extends Component {
     return (
       <div>
         <Search />
-      	<ArtWorksList/>
+        <div className="wrapper">
+          <ArtWorksList/>
+          <div className="push"></div>
+        </div>
       	{/* <ArtWorkDetail/>*/}
-        <Footer />
+        <Footer className="footer" />
       </div>
     );
   }
