@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchArtists, findArtByContext} from '../actions/index';
 import DropDown from '../components/DropDown';
+import FontAwesome from 'react-fontawesome';
 import {css} from 'glamor';
 
 let rule = css({
@@ -16,6 +17,7 @@ class Footer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isHidden: true,
       artists: [],
       //   {
       //     id: 0,
@@ -163,8 +165,10 @@ class Footer extends Component {
     this.props.fetchArtists()
     // this.formatList();
   }
+  toggleHidden() {
+    this.setState((prevState) => ({isHidden: !prevState.isHidden}));
+  }
   componentDidUpdate(prevProps, prevState) {
-    console.log('prevProps: ', prevProps);
     if (prevProps !== this.props && this.props.artists) {
       this.setState({
         artists: this.props.artists.map(artist => {
@@ -188,32 +192,39 @@ class Footer extends Component {
   }
   render() {
     const {artists, medium, subject, period} = this.state;
+    const Dropdowns = () => (
+      <div className="filter-group filter-group--filtering">
+        <DropDown
+          className="col-sm-3"
+          title="Select an Artist"
+          list={artists}
+          toggleItem={this.toggleSelected.bind(this)}
+        />
+        <DropDown
+          className="col-sm-6"
+          title="Select an Period"
+          list={period}
+          toggleItem={this.toggleSelected.bind(this)}
+        />
+        <DropDown
+          className="col-sm-3"
+          title="Select an Medium"
+          list={medium}
+          toggleItem={this.toggleSelected.bind(this)}
+        />
+        <DropDown
+          className="col-sm-3"
+          title="Select a Subject"
+          list={subject}
+          toggleItem={this.toggleSelected.bind(this)}
+        />
+      </div>)
     console.log('artists form props: ', artists)
     return (<footer className="collection-grid-filters row" {...rule}>
-      <DropDown
-        className="col-sm-3"
-        title="Select an Artist"
-        list={artists}
-        toggleItem={this.toggleSelected.bind(this)}
-      />
-      <DropDown
-        className="col-sm-6"
-        title="Select an Period"
-        list={period}
-        toggleItem={this.toggleSelected.bind(this)}
-      />
-      <DropDown
-        className="col-sm-3"
-        title="Select an Medium"
-        list={medium}
-        toggleItem={this.toggleSelected.bind(this)}
-      />
-      <DropDown
-        className="col-sm-3"
-        title="Select a Subject"
-        list={subject}
-        toggleItem={this.toggleSelected.bind(this)}
-      />{/* <div className="filter-group filter-group--sorting">
+      <button onClick={() => this.toggleHidden()} className="collection-filters-toggle btn btn-collapse">{this.state.isHidden ? <FontAwesome name="plus" size="2x" /> : <FontAwesome name="minus" size="2x" />}</button>
+      {!this.state.isHidden && <Dropdowns />}
+
+      {/* <div className="filter-group filter-group--sorting">
         <div className="collapse-for-small" id="theFilters" aria-expanded="true" style={{
             style: 'auto'
           }}>
