@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import ViewerDetails from './ViewerDetails';
+import FontAwesome from 'react-fontawesome';
 import openSeadragon from 'openseadragon';
 
 // helper function to load image using promises
@@ -17,6 +19,9 @@ class Zoomer extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      isHidden: true
+    }
   }
   componentDidMount() {
     console.log('mounted')
@@ -25,6 +30,9 @@ class Zoomer extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return false
+  }
+  toggleHidden() {
+    this.setState((prevState) => ({isHidden: !prevState.isHidden}));
   }
 
   initSeaDragon() {
@@ -51,7 +59,15 @@ class Zoomer extends Component {
   render() {
     // let self = this;
     let {id} = this.props;
-    return ( <div id={id} style={{width: "800px", height: "600px"}}></div>)
+    return (
+      <div className="viewer-container">
+        <div id={id} className="openseadragon-canvas"></div>
+        <a style={{zIndex: -1, position: 'relative'}}><div className="viewer-bottom-controls" style={{position: 'fixed'}}><button className="btn viewer-detail-display" data-toggle="collapse" onClick={() => this.toggleHidden()}><span className="closed-text">{this.state.isHidden ? (<span><FontAwesome name="plus" size="2x" />Show</span>) : (<span><FontAwesome name="minus" size="2x" />Hide</span>)} Details</span></button></div></a>
+        <div className="viewer-overlay collapse">
+          {!this.state.isHidden && <ViewerDetails />}
+        </div>
+      </div>
+    )
   }
 }
 

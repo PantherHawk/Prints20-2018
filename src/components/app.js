@@ -5,6 +5,7 @@ import Admin from './Admin';
 import Gallery from './Gallery';
 import Menu from './Menu';
 import Collections from './Collections'
+import Zoomer from './Zoomer';
 import styled from 'styled-components';
 
 const MenuItem = styled.a`
@@ -85,8 +86,9 @@ class App extends Component {
             <UserName />
           </nav> */}
           <div className="routes">
-            <Route exact path="/" component={Gallery}/>
+            <Route exact path="/collection" component={Gallery}/>
             <Route path="/collections" component={Collections}/>
+            <Route path="/viewer" component={Zoomer} />
             <Route path="/admin" component={Admin}/>
           </div>
         </div>

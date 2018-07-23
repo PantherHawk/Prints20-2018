@@ -104,25 +104,9 @@ class ArtWorksList extends Component {
       }
     };
     return selected
-      ? (<Zoomer image={selected.url}/>)
+      ? (<Zoomer details={selected} image={selected.url}/>)
       : (<div {...collectionStage}>
-        {/* <Slider {...settings}>
 
-          {
-            items.slice(0, Math.floor((items.length - 1)/2)).map((item, i) => {
-              return this.renderItem(item)
-            })
-          }
-
-        </Slider>
-        <Slider {...settings}>
-        {
-          items.slice(Math.floor((items.length - 1)/2) + 1).map((item, i) => {
-            return this.renderItem(item)
-          })
-        }
-      </Slider> */
-        }
         <StackGrid columnWidth={150}
           monitorImagesLoaded={true}
           // gutterWidth={10}

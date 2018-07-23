@@ -103,14 +103,6 @@
     align-items: center;
 }
 
-.btn-collapse {
-    border: none;
-    padding: 0;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
-
 .dd-list {
   top: auto;
     bottom: 100%;
@@ -133,4 +125,59 @@ html, body {
 }
 .footer, .push {
     height: 142px; /* .push must be the same height as .footer */
+}
+
+.viewer-overlay {
+    position: absolute;
+    background-color: rgba(0,0,0,.8);
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.viewer-overlay.on {
+    pointer-events: all;
+    opacity: 1;
+}
+
+.btn-collapse.collapsed .closed-text, .btn-collapse {
+  display: inline-block;
+}
+
+.viewer-bottom-controls {
+  color: #fff;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+}
+
+.viewer-bottom-controls button:hover, .viewer-nav button:hover {
+    color: hsla(0,0%,100%,.6);
+    padding-left: 0;
+    margin-bottom: auto;
+    overflow: visible;
+}
+
+.openseadragon-canvas {
+  background: none transparent; border: none; margin: 0px; padding: 0px; position: absolute; width: 100%; height: 100%; overflow: hidden; top: 0px; left: 0px; touch-action: none; text-align: left; outline: none;
+}
+
+.viewer-container {
+  position: relative;
+  height: 100%;
+  background-color: #000;
+}
+
+.viewer-detail-display {
+  background: none;
+    border: none;
+    color: #fff;
+    display: inline-block!important;
+    padding: 0 2px;
+    width: auto!important
 }
