@@ -93,22 +93,21 @@ class ImageCard extends Component {
     //
     // :
     <div className='grid-item resource' key={item.public_id} /*{...hovered && {...overlay}}*/
-  onMouseEnter={() => {
-        this.setState((prevState, props) => ({hovered: true}))
-        console.log('state changed to hovered')
-      }} onMouseLeave={() => {
-        this.setState((prevState, props) => ({hovered: false}))
-        console.log('hovered state turned off.')
-      }}>
+  // onMouseEnter={() => {
+        // this.setState((prevState, props) => ({hovered: true}))
+        // console.log('state changed to hovered')
+      // }} onMouseLeave={() => {
+        // this.setState((prevState, props) => ({hovered: false}))
+        // console.log('hovered state turned off.')
+      // }}
+      onClick={() => {
+        this.props.selectArtWork(item);
+        this.props.hideArt(!this.state.hideArt);
+      }}
+      >
 
       <CloudinaryContext cloudName="prints20">
-        <Image {...this.state.hideArt ? {...hideAway} : ''} publicId={item.public_id} width="100%" onClick={() => {
-            this.props.selectArtWork(item);
-            this.props.hideArt(!this.state.hideArt);
-            // this.setState((prevState, props) => ({
-            //   hideArt: !prevState.hideArt
-            // }));
-          }}
+        <Image {...this.state.hideArt ? {...hideAway} : ''} publicId={item.public_id} width="100%"
           // style={{background: `url(${url})`}}
 
           // {...hovered && {...imgOverlay}}
@@ -131,7 +130,11 @@ class ImageCard extends Component {
           {/* </div> */}
         </Image>
         <div id="overlay">
-          <button>View Artwork</button>
+          <h5 className="img-title">{item.title && item.title}</h5>
+          <p>{item.artist && item.artist}</p>
+          <button
+            onClick={(e) => console.log('item: ', item)}
+            style={{content: "View Artwork"}} text="View Artwork" value="View Artwork"><p className="button-title">View Artwork</p></button>
         </div>
 
       </CloudinaryContext>
