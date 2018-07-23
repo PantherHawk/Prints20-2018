@@ -221,9 +221,12 @@ class Footer extends Component {
       </div>)
     console.log('artists form props: ', artists)
     return (<footer className="collection-grid-filters row" {...rule}>
-      <button onClick={() => this.toggleHidden()} className="collection-filters-toggle btn btn-collapse">{this.state.isHidden ? <FontAwesome name="plus" size="2x" /> : <FontAwesome name="minus" size="2x" />}</button>
+      <a className="collection-filters-toggle btn btn-collapse">
+        <div className="filter-text">
+      <button onClick={() => this.toggleHidden()}><span>{this.state.isHidden ? <FontAwesome name="plus" size="2x" /> : <FontAwesome name="minus" size="2x" />}</span></button></div></a>
+      <div>
       {!this.state.isHidden && <Dropdowns />}
-
+    </div>
       {/* <div className="filter-group filter-group--sorting">
         <div className="collapse-for-small" id="theFilters" aria-expanded="true" style={{
             style: 'auto'

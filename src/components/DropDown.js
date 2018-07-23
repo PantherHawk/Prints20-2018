@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import {connect} from 'react-redux';
@@ -72,7 +71,7 @@ class DropDown extends Component {
               : <FontAwesome name="angle-down" size="2x" />
             }
           </div>
-          {listOpen && <DropDownMenu className="dd-list inner">
+          {listOpen && <DropDownMenu className="dd-list inner dropdown-menu">
             {list && list.map(item => (
               <li
                 // className="dd-list-item bootstrap-select btn-group dropdown-menu li a"
